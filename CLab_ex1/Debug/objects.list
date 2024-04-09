@@ -1,3 +1,4 @@
+"./Src/button.o"
 "./Src/initialisation.o"
 "./Src/main.o"
 "./Src/syscalls.o"

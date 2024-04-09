@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include "stm32f303xc.h"
 #include "initialisation.h"
+#include "button.h"
 
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
@@ -42,47 +43,6 @@ void EXTI0_IRQHandler()
 
 }
 
-void enable_interrupt_button()
-{
-	// disable interrupt
-	__disable_irq();
-
-	// enable the system configuration controller
-	RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;
-
-	// External Interrupts PA0
-	// EXTI0 in SYSCFG_EXTICR1 needs to be 0x00
-	SYSCFG->EXTICR[0] = SYSCFG_EXTICR1_EXTI0_PA;
-
-	//  Select EXTI0 interrupt on rising edge
-	EXTI->RTSR |= EXTI_RTSR_TR0; // rising edge of EXTI line 0 (includes PA0)
-
-	// set the interrupt from EXTI line 0 as 'not masked' - as in, enable it.
-	EXTI->IMR |= EXTI_IMR_MR0;
-
-	// Tell the NVIC module that EXTI0 interrupts should be handled
-	NVIC_SetPriority(EXTI0_IRQn, 1);  // Set Priority
-	NVIC_EnableIRQ(EXTI0_IRQn);
-
-	// Re-enable interrupts
-	__enable_irq();
-}
-
-//function to modify LED pattern
-void modify_leds()
-{
-	uint8_t *led_register = ((uint8_t*)&(GPIOE->ODR)) + 1;
-
-	if (*led_register == 0b11111111)
-	{
-		*led_register = 0b00000000;
-		return;
-	}
-	*led_register <<= 1;
-	*led_register += 1;
-
-}
-
 int main(void)
 {
     //settings for the boards
@@ -90,7 +50,7 @@ int main(void)
 
 	initialise_board();
 
-	button_pressed = &modify_leds;
+	button_pressed = &modify_led;
 
 	enable_interrupt_button();
 

@@ -59,8 +59,8 @@ all: main-build
 main-build: CLab_ex1.elf secondary-outputs
 
 # Tool invocations
-CLab_ex1.elf CLab_ex1.map: $(OBJS) $(USER_OBJS) C:\Users\lykan\STM32CubeIDE\CLab_ex1\STM32F303VCTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "CLab_ex1.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\lykan\STM32CubeIDE\CLab_ex1\STM32F303VCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CLab_ex1.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+CLab_ex1.elf CLab_ex1.map: $(OBJS) $(USER_OBJS) C:\Users\lykan\Desktop\Github\C_LAB_5_MTRX2700\CLab_ex1\STM32F303VCTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "CLab_ex1.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\lykan\Desktop\Github\C_LAB_5_MTRX2700\CLab_ex1\STM32F303VCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="CLab_ex1.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
