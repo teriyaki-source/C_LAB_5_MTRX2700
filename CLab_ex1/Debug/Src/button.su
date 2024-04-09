@@ -1,6 +1,7 @@
 C:/Users/lykan/Desktop/Github/MTRX2700/MTRX2700-2024/stm32f303-definitions/Core/Inc/core_cm4.h:1688:22:__NVIC_EnableIRQ	16	static
 C:/Users/lykan/Desktop/Github/MTRX2700/MTRX2700-2024/stm32f303-definitions/Core/Inc/core_cm4.h:1816:22:__NVIC_SetPriority	16	static
 ../Src/button.c:3:6:enable_interrupt_button	8	static,ignoring_inline_asm
-../Src/button.c:29:6:get_current_led	16	static
-../Src/button.c:34:6:store_led	24	static
-../Src/button.c:42:6:modify_led	16	static
+../Src/button.c:31:6:get_current_led	16	static
+../Src/button.c:36:6:store_led	24	static
+../Src/button.c:43:6:led_flag_on	4	static
+../Src/button.c:48:6:modify_led	16	static

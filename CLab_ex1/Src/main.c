@@ -21,6 +21,7 @@
 #include "stm32f303xc.h"
 #include "initialisation.h"
 #include "button.h"
+#include "timer.h"
 
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
@@ -50,10 +51,21 @@ int main(void)
 
 	initialise_board();
 
-	button_pressed = &modify_led;
+	button_pressed = led_flag_on;
 
 	enable_interrupt_button();
 
+	start_timer();
+
+	uint32_t time_length = 0x00800000;
+
 	/*loop forever*/
-	for(;;);
+	for(;;)
+	{
+		if((EXTI->EMR && 1) == 1)
+		{
+			modify_led();
+		}
+		timer_loop(time_length);
+	}
 }

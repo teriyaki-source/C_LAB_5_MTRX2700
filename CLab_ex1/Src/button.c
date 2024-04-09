@@ -22,6 +22,8 @@ void enable_interrupt_button()
 	NVIC_SetPriority(EXTI0_IRQn, 1);  // Set Priority
 	NVIC_EnableIRQ(EXTI0_IRQn);
 
+	EXTI->EMR = 0x00000000;
+
 	// Re-enable interrupts
 	__enable_irq();
 }
@@ -36,7 +38,11 @@ void store_led(uint8_t led_bitmask)
 	uint8_t *led_register = ((uint8_t*)&(GPIOE->ODR)) + 1;
 
 	*led_register = led_bitmask;
+}
 
+void led_flag_on()
+{
+	EXTI->EMR |= EXTI_EMR_MR0;
 }
 
 void modify_led()
@@ -62,4 +68,7 @@ void modify_led()
 
 	//store led bitmask back
 	store_led(led_bitmask);
+
+	//reset the flag to NOT_PRESSED
+	EXTI->EMR = 0x00000000;
 }
