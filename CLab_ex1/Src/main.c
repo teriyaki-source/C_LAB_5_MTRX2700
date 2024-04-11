@@ -27,6 +27,8 @@
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
+#define DELAY 1000 //in ms
+
 //function pointer to a function when a button is pressed, set to NULL so when it not assigned to any
 //specific function it wont be called
 void (*button_pressed)() = 0x00;
@@ -57,15 +59,13 @@ int main(void)
 
 	start_timer();
 
-	uint32_t time_length = 0x00800000;
-
 	/*loop forever*/
 	for(;;)
 	{
 		if((EXTI->EMR && 1) == 1)
 		{
 			modify_led();
+			timer_loop(DELAY);
 		}
-		timer_loop(time_length);
 	}
 }

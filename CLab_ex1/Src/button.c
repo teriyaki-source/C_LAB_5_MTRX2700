@@ -1,4 +1,5 @@
 #include "button.h"
+#include "timer.h"
 
 void enable_interrupt_button()
 {
@@ -22,22 +23,22 @@ void enable_interrupt_button()
 	NVIC_SetPriority(EXTI0_IRQn, 1);  // Set Priority
 	NVIC_EnableIRQ(EXTI0_IRQn);
 
-	EXTI->EMR = 0x00000000;
+	EXTI->EMR = NOT_PRESSED;
 
 	// Re-enable interrupts
 	__enable_irq();
 }
 
-void get_current_led(uint8_t *led_bitmask)
+void get_current_led(uint8_t *bitmask)
 {
-	*led_bitmask = *(((uint8_t*)&(GPIOE->ODR)) + 1);
+	*bitmask = *(((uint8_t*)&(GPIOE->ODR)) + 1);
 }
 
-void store_led(uint8_t led_bitmask)
+void store_led(uint8_t bitmask)
 {
 	uint8_t *led_register = ((uint8_t*)&(GPIOE->ODR)) + 1;
 
-	*led_register = led_bitmask;
+	*led_register = bitmask;
 }
 
 void led_flag_on()
@@ -45,30 +46,35 @@ void led_flag_on()
 	EXTI->EMR |= EXTI_EMR_MR0;
 }
 
-void modify_led()
+void led_flag_off()
+{
+	//reset the flag to NOT_PRESSED
+	EXTI->EMR = NOT_PRESSED;
+}
+
+void modify_led(uint32_t delay)
 {
 	//variable for storing bitmask
-	uint8_t led_bitmask;
+
+	uint8_t bitmask;
 
 	//get the current bitmask for led
-	get_current_led(&led_bitmask);
+	get_current_led(&bitmask);
 
 	//if the leds all on, resets everything
-	if(led_bitmask == 0b11111111)
+	if(bitmask == 0b11111111)
 	{
-		led_bitmask = 0b00000000;
+		bitmask = 0b00000000;
 	}
 
 	//otherwise turn one more on
 	else
 	{
-		led_bitmask <<= 1;
-		led_bitmask += 1;
+		bitmask <<= 1;
+		bitmask += 1;
 	}
 
 	//store led bitmask back
-	store_led(led_bitmask);
+	store_led(bitmask);
 
-	//reset the flag to NOT_PRESSED
-	EXTI->EMR = 0x00000000;
 }

@@ -1,4 +1,5 @@
 #include "timer.h"
+#include "button.h"
 
 void trigger_prescaler()
 {
@@ -17,12 +18,15 @@ void start_timer()
 	//let timer running
 	TIM2->CR1 |= TIM_CR1_CEN;
 
+	//set prescaler to 7999 to get the frequency of 1kHz
+	TIM2->PSC = 7999;
 	trigger_prescaler();
 
 }
 
-void timer_loop(uint32_t time_length)
+void timer_loop(uint32_t delay)
 {
 	TIM2->CNT = 0;
-	while (TIM2->CNT < time_length) {} ;
+	while (TIM2->CNT < delay) {} ;
+	led_flag_off();
 }
