@@ -28,22 +28,6 @@
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
-
-void USART_callback(uint8_t *string) {
-//	// This function will be called after a transmission is complete
-	SerialOutputString(string, &USART1_PORT);
-}
-
-
-
-	// run the button press handler (make sure it is not null first !)
-//	uint8_t* buffer[BUFFER_SIZE] = {0};
-//	SerialReceiveString(buffer, &USART1_PORT);
-
-	// reset the interrupt (so it doesn't keep firing until the next trigger)
-//	EXTI->PR |= EXTI_PR_PR10;
-
-
 int main(void)
 {
 	uint8_t* buffer[BUFFER_SIZE] = {0};

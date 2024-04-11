@@ -59,8 +59,8 @@ all: main-build
 main-build: C_LAB_TASK_2.elf secondary-outputs
 
 # Tool invocations
-C_LAB_TASK_2.elf C_LAB_TASK_2.map: $(OBJS) $(USER_OBJS) /Users/lukemarinaki/STM32CubeIDE/workspace_1.14.0/C_LAB_TASK_2/STM32F303VCTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "C_LAB_TASK_2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/lukemarinaki/STM32CubeIDE/workspace_1.14.0/C_LAB_TASK_2/STM32F303VCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="C_LAB_TASK_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+C_LAB_TASK_2.elf C_LAB_TASK_2.map: $(OBJS) $(USER_OBJS) /Users/lukemarinaki/Github/C_LAB_5_MTRX2700/C_LAB_TASK_2/STM32F303VCTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "C_LAB_TASK_2.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/lukemarinaki/Github/C_LAB_5_MTRX2700/C_LAB_TASK_2/STM32F303VCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="C_LAB_TASK_2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

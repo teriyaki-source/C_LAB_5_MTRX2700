@@ -19,7 +19,6 @@ struct _SerialPort {
 };
 
 
-
 // instantiate the serial port parameters
 //   note: the complexity is hidden in the c file
 SerialPort USART1_PORT = {USART1,
@@ -33,7 +32,6 @@ SerialPort USART1_PORT = {USART1,
 		0x00, // no change to the high alternate function register
 		0x00 // default function pointer is NULL
 		};
-
 
 // InitialiseSerial - Initialise the serial port
 // Input: baudRate is from an enumerated set
@@ -93,6 +91,21 @@ void SerialInitialise(uint32_t baudRate, SerialPort *serial_port, void (*complet
 	serial_port->UART->CR1 |= USART_CR1_TE | USART_CR1_RE | USART_CR1_UE;
 }
 
+/*
+||------------------||
+||	UART Interrupt	||
+||------------------||
+*/
+
+uint8_t *buffer[BUFFER_SIZE] = {0};
+uint8_t *last_word[BUFFER_SIZE] = {0};
+int i = 0;
+
+void (*on_key_input)() = 0x00;
+
+void moveChar(SerialPort *serial_port) {
+	uint8_t temp = serial_port->UART->RDR;
+}
 void enable_uart_interrupt(SerialPort *serial_port){
 	__disable_irq();
 
@@ -101,8 +114,23 @@ void enable_uart_interrupt(SerialPort *serial_port){
 	NVIC_SetPriority(USART1_IRQn, 1);
 	NVIC_EnableIRQ(USART1_IRQn);
 
+	on_key_input = &moveChar;
+
 	__enable_irq();
 }
+
+void USART1_EXTI25_IRQHandler(){
+	// should receive a character and store it in a buffer then return
+	uint8_t* letter = "Hello\r\n";
+	SerialOutputString(letter, &USART1_PORT);
+	on_key_input(&USART1_PORT);
+}
+
+/*
+||------------------||
+||	  UART Output	||
+||------------------||
+*/
 
 void SerialOutputChar(uint8_t data, SerialPort *serial_port) {
 
@@ -121,6 +149,8 @@ void SerialOutputString(uint8_t *pt, SerialPort *serial_port) {
 		pt++;
 	}
 }
+
+
 
 void SerialReceiveString(uint8_t* buffer, SerialPort *serial_port) {
 	for (int i = 0; i < BUFFER_SIZE; i++){
@@ -145,12 +175,7 @@ void SerialReceiveString(uint8_t* buffer, SerialPort *serial_port) {
 	serial_port->completion_function(buffer);
 }
 
-void resetInterruptFlag(SerialPort *serial_port) {
-	serial_port->UART->CR1 & !(USART_CR1_RXNEIE);
-}
-
-void USART1_IRQHandler(){
-//	resetInterruptFlag(&USART1_PORT);
-//	uint8_t* letter = "Hello\r\n";
-//	SerialOutputString(letter, &USART1_PORT);
+void USART_callback(uint8_t *string) {
+//	// This function will be called after a transmission is complete
+	SerialOutputString(string, &USART1_PORT);
 }

@@ -23,7 +23,7 @@ enum {
   BAUD_57600,
   BAUD_115200
 };
-
+void moveChar(SerialPort *serial_port);
 
 // SerialInitialise - initialise the serial port
 // Input: baud rate as defined in the enum
@@ -36,11 +36,11 @@ void enable_uart_interrupt(SerialPort *serial_port);
 // Input: char to be transferred
 void SerialOutputChar(uint8_t, SerialPort *serial_port);
 
-
 // SerialOutputString - output a NULL TERMINATED string to the serial port
 // Input: pointer to a NULL-TERMINATED string (if not null terminated, there will be problems)
 void SerialOutputString(uint8_t *pt, SerialPort *serial_port);
-
-void USART1_IRQHandler();
+void SerialReceiveString(uint8_t* buffer, SerialPort *serial_port);
+void USART_callback(uint8_t *string);
+void USART1_EXTI25_IRQHandler();
 
 #endif

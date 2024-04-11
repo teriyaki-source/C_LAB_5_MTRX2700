@@ -1,9 +1,10 @@
 /Users/lukemarinaki/STM32CubeIDE/workspace_1.14.0/stm32f303-definitions/Core/Inc/core_cm4.h:1688:22:__NVIC_EnableIRQ	2
 /Users/lukemarinaki/STM32CubeIDE/workspace_1.14.0/stm32f303-definitions/Core/Inc/core_cm4.h:1816:22:__NVIC_SetPriority	2
-../Src/serial.c:40:6:SerialInitialise	6
-../Src/serial.c:96:6:enable_uart_interrupt	1
-../Src/serial.c:107:6:SerialOutputChar	2
-../Src/serial.c:116:6:SerialOutputString	2
-../Src/serial.c:125:6:SerialReceiveString	6
-../Src/serial.c:148:6:resetInterruptFlag	1
-../Src/serial.c:152:6:USART1_IRQHandler	1
+../Src/serial.c:38:6:moveChar	1
+../Src/serial.c:44:6:SerialInitialise	6
+../Src/serial.c:102:6:enable_uart_interrupt	1
+../Src/serial.c:113:6:SerialOutputChar	2
+../Src/serial.c:122:6:SerialOutputString	2
+../Src/serial.c:131:6:SerialReceiveString	6
+../Src/serial.c:154:6:USART_callback	1
+../Src/serial.c:159:6:USART1_EXTI25_IRQHandler	1
