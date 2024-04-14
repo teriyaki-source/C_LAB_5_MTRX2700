@@ -41,6 +41,6 @@ int main(void)
 	/* Loop forever */
 	for(;;) {
 //		SerialReceiveString(buffer, &USART1_PORT);
-		SerialOutputString(string, &USART1_PORT);
+//		SerialOutputString(string, &USART1_PORT);
 	}
 }

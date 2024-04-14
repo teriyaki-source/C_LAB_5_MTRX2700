@@ -1,6 +1,7 @@
 #include "serial.h"
 #include "stm32f303xc.h"
 #include "config.h"
+#include <string.h>
 
 // We store the pointers to the GPIO and USART that are used
 //  for a specific serial port. To add another serial port
@@ -103,8 +104,28 @@ int i = 0;
 
 void (*on_key_input)() = 0x00;
 
-void moveChar(SerialPort *serial_port) {
-	uint8_t temp = serial_port->UART->RDR;
+void getChar(SerialPort *serial_port, uint8_t* buffer, uint8_t* last_word, int* i) {
+	// gets the current count in the word
+	uint8_t x = *i;
+	if ((serial_port->UART->ISR & USART_ISR_ORE) != 0 || (serial_port->UART->ISR & USART_ISR_FE) != 0){
+		serial_port->UART->ICR |= USART_ICR_ORECF;
+		serial_port->UART->ICR |= USART_ICR_FECF;
+	}
+	if ((serial_port->UART->ISR & USART_ISR_RXNE) != 0){
+		buffer[x] = serial_port->UART->RDR;
+		*i += 1;
+		if (buffer[x] == 13) {
+			buffer[x+1] = 10;
+			SerialOutputString(buffer, &USART1_PORT);
+			SerialOutputString(last_word, &USART1_PORT);
+			strncpy(last_word, buffer, BUFFER_SIZE);
+			for (int j = 0; j < BUFFER_SIZE; j++){
+				buffer[j] = 0;
+			}
+			*i = 0;
+
+		}
+	}
 }
 void enable_uart_interrupt(SerialPort *serial_port){
 	__disable_irq();
@@ -114,16 +135,14 @@ void enable_uart_interrupt(SerialPort *serial_port){
 	NVIC_SetPriority(USART1_IRQn, 1);
 	NVIC_EnableIRQ(USART1_IRQn);
 
-	on_key_input = &moveChar;
+	on_key_input = &getChar;
 
 	__enable_irq();
 }
 
 void USART1_EXTI25_IRQHandler(){
 	// should receive a character and store it in a buffer then return
-	uint8_t* letter = "Hello\r\n";
-	SerialOutputString(letter, &USART1_PORT);
-	on_key_input(&USART1_PORT);
+	on_key_input(&USART1_PORT, buffer, last_word, &i);
 }
 
 /*
@@ -140,7 +159,6 @@ void SerialOutputChar(uint8_t data, SerialPort *serial_port) {
 }
 
 
-
 void SerialOutputString(uint8_t *pt, SerialPort *serial_port) {
 	uint32_t counter = 0;
 	while(*pt) {
@@ -150,32 +168,14 @@ void SerialOutputString(uint8_t *pt, SerialPort *serial_port) {
 	}
 }
 
-
-
-void SerialReceiveString(uint8_t* buffer, SerialPort *serial_port) {
-	for (int i = 0; i < BUFFER_SIZE; i++){
-		buffer[i] = 0;
-	}
-	uint8_t termination = 13;
-	uint8_t last_char = 0;
-	uint8_t i = 0;
-
-	while ((last_char != termination) & (i < BUFFER_SIZE)){
-		if ((serial_port->UART->ISR & USART_ISR_ORE) != 0 || (serial_port->UART->ISR & USART_ISR_FE) != 0){
-			serial_port->UART->ICR |= USART_ICR_ORECF;
-			serial_port->UART->ICR |= USART_ICR_FECF;
-		}
-		if ((serial_port->UART->ISR & USART_ISR_RXNE) != 0){
-			buffer[i] = serial_port->UART->RDR;					// store input register value in array
-			last_char = buffer[i];
-			i++;
-		}
-	}
-	buffer[i] = 10;
-	serial_port->completion_function(buffer);
-}
+/*
+||------------------------------||
+||	  UART Completion Function	||
+||------------------------------||
+*/
 
 void USART_callback(uint8_t *string) {
 //	// This function will be called after a transmission is complete
+
 	SerialOutputString(string, &USART1_PORT);
 }
