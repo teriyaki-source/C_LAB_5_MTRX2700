@@ -32,6 +32,7 @@
 //function pointer to a function when a button is pressed, set to NULL so when it not assigned to any
 //specific function it wont be called
 void (*button_pressed)() = 0x00;
+extern uint8_t led_flag;
 
 void EXTI0_IRQHandler()
 {
@@ -40,10 +41,7 @@ void EXTI0_IRQHandler()
 	{
 		button_pressed();
 	}
-
-	//reset interrupt
 	EXTI->PR |= EXTI_PR_PR0;
-
 }
 
 int main(void)
@@ -62,10 +60,11 @@ int main(void)
 	/*loop forever*/
 	for(;;)
 	{
-		if((EXTI->EMR && 1) == 1)
+		if(led_flag == PRESSED)
 		{
 			modify_led();
 			timer_loop(DELAY);
+			led_flag_off();
 		}
 	}
 }

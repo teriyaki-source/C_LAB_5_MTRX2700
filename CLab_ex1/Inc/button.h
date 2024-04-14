@@ -1,10 +1,12 @@
 #ifndef BUTTON_H
-#define BUTTON_h
+#define BUTTON_H
 
 #include <stdint.h>
 #include "stm32f303xc.h"
 
-#define NOT_PRESSED 0x00000000;
+#define NOT_PRESSED 0
+#define PRESSED 1
+
 
 //enable interrupt for button (PA0)
 void enable_interrupt_button();

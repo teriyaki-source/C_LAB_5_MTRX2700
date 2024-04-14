@@ -1,5 +1,4 @@
 #include "timer.h"
-#include "button.h"
 
 void trigger_prescaler()
 {
@@ -28,5 +27,5 @@ void timer_loop(uint32_t delay)
 {
 	TIM2->CNT = 0;
 	while (TIM2->CNT < delay) {} ;
-	led_flag_off();
+	//reset interrupt
 }

@@ -1,6 +1,8 @@
 #include "button.h"
 #include "timer.h"
 
+uint8_t led_flag;
+
 void enable_interrupt_button()
 {
 	// disable interrupt
@@ -23,8 +25,6 @@ void enable_interrupt_button()
 	NVIC_SetPriority(EXTI0_IRQn, 1);  // Set Priority
 	NVIC_EnableIRQ(EXTI0_IRQn);
 
-	EXTI->EMR = NOT_PRESSED;
-
 	// Re-enable interrupts
 	__enable_irq();
 }
@@ -43,16 +43,17 @@ void store_led(uint8_t bitmask)
 
 void led_flag_on()
 {
-	EXTI->EMR |= EXTI_EMR_MR0;
+	led_flag = PRESSED;
+
 }
 
 void led_flag_off()
 {
 	//reset the flag to NOT_PRESSED
-	EXTI->EMR = NOT_PRESSED;
+	led_flag = NOT_PRESSED;
 }
 
-void modify_led(uint32_t delay)
+void modify_led()
 {
 	//variable for storing bitmask
 
