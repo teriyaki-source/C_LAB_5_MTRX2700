@@ -14,7 +14,6 @@ typedef struct _SerialPort SerialPort;
 //   they are fixed, unique values)
 extern SerialPort USART1_PORT;
 
-
 // The user might want to select the baud rate
 enum {
   BAUD_9600,
@@ -23,13 +22,16 @@ enum {
   BAUD_57600,
   BAUD_115200
 };
-void moveChar(SerialPort *serial_port);
+
+void SerialInitialise(uint32_t baudRate, SerialPort *serial_port, void (*completion_function)(uint32_t));
+
+void getChar(SerialPort *serial_port, uint8_t* buffer, uint8_t* last_word, int* i);
 
 // SerialInitialise - initialise the serial port
 // Input: baud rate as defined in the enum
-void SerialInitialise(uint32_t baudRate, SerialPort *serial_port, void (*completion_function)(uint32_t) );
 
 void enable_uart_interrupt(SerialPort *serial_port);
+void USART1_EXTI25_IRQHandler();
 
 // SerialOutputChar - output a char to the serial port
 //  note: this version waits until the port is ready (not using interrupts)
@@ -39,8 +41,6 @@ void SerialOutputChar(uint8_t, SerialPort *serial_port);
 // SerialOutputString - output a NULL TERMINATED string to the serial port
 // Input: pointer to a NULL-TERMINATED string (if not null terminated, there will be problems)
 void SerialOutputString(uint8_t *pt, SerialPort *serial_port);
-void SerialReceiveString(uint8_t* buffer, SerialPort *serial_port);
 void USART_callback(uint8_t *string);
-void USART1_EXTI25_IRQHandler();
 
 #endif

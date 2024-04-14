@@ -107,21 +107,33 @@ void (*on_key_input)() = 0x00;
 void getChar(SerialPort *serial_port, uint8_t* buffer, uint8_t* last_word, int* i) {
 	// gets the current count in the word
 	uint8_t x = *i;
+	// checks the flags of the input port - clears them if raised
 	if ((serial_port->UART->ISR & USART_ISR_ORE) != 0 || (serial_port->UART->ISR & USART_ISR_FE) != 0){
 		serial_port->UART->ICR |= USART_ICR_ORECF;
 		serial_port->UART->ICR |= USART_ICR_FECF;
 	}
+	// if the receive not empty flag is not 0 i.e. there is a character ready to be received
 	if ((serial_port->UART->ISR & USART_ISR_RXNE) != 0){
+		// get the value from the Read Data Register (RDR)
 		buffer[x] = serial_port->UART->RDR;
+		// increment the counter for the position in the word
 		*i += 1;
-		if (buffer[x] == 13) {
-			buffer[x+1] = 10;
+		if (buffer[x] == TERMINATION_CHAR) {
+			// add a newline to the buffer for better output aesthetic
+			buffer[x+1] = NEWLINE_CHAR;
+			// can be removed - demonstrate double buffer
 			SerialOutputString(buffer, &USART1_PORT);
 			SerialOutputString(last_word, &USART1_PORT);
+			// any additional handling should go here - before buffer is cleared
+
+			serial_port->completion_function(last_word);
+
+			// copy word to previous word and then clear current buffer
 			strncpy(last_word, buffer, BUFFER_SIZE);
 			for (int j = 0; j < BUFFER_SIZE; j++){
 				buffer[j] = 0;
 			}
+			// reset the counter to 0
 			*i = 0;
 
 		}
@@ -130,11 +142,13 @@ void getChar(SerialPort *serial_port, uint8_t* buffer, uint8_t* last_word, int* 
 void enable_uart_interrupt(SerialPort *serial_port){
 	__disable_irq();
 
+	// enable the read data not empty interrupt enable bit in the control register
 	serial_port->UART->CR1 |= USART_CR1_RXNEIE;
 
 	NVIC_SetPriority(USART1_IRQn, 1);
 	NVIC_EnableIRQ(USART1_IRQn);
 
+	// set the interrupt function
 	on_key_input = &getChar;
 
 	__enable_irq();
@@ -176,6 +190,17 @@ void SerialOutputString(uint8_t *pt, SerialPort *serial_port) {
 
 void USART_callback(uint8_t *string) {
 //	// This function will be called after a transmission is complete
-
-	SerialOutputString(string, &USART1_PORT);
+//	uint8_t *instruct[2] = {0};
+//	int i = 0;
+//
+//	uint8_t *token = strtok(string, " ");
+//	while (token != NULL){
+//		instruct[i++] = token;
+//		token = strtok(NULL, " ");
+//	}
+//
+//	if (instruct[0] == "led"){
+//		SerialOutputString(instruct[1], &USART1_PORT);
+//	}
+//	SerialOutputString(string, &USART1_PORT);
 }

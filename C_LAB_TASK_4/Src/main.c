@@ -17,12 +17,6 @@
  */
 
 #include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "serial.h"
-#include "stm32f303xc.h"
-#include "config.h"
 
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
@@ -30,16 +24,6 @@
 
 int main(void)
 {
-	uint8_t* string = "This is a string!\r\n";
-
-//	void (*completion_function)(uint32_t) = &finished_transmission;
-
-	SerialInitialise(BAUD_115200, &USART1_PORT, &USART_callback);
-	enable_uart_interrupt(&USART1_PORT);
-
-	/* Loop forever */
-	for(;;) {
-//		SerialReceiveString(buffer, &USART1_PORT);
-//		SerialOutputString(string, &USART1_PORT);
-	}
+    /* Loop forever */
+	for(;;);
 }
