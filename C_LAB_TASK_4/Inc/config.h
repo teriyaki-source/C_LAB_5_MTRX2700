@@ -8,7 +8,7 @@
 #ifndef CONFIG_H_
 #define CONFIG_H_
 
-#define BUFFER_SIZE 30
+#define BUFFER_SIZE 40
 #define TERMINATION_CHAR 13
 #define NEWLINE_CHAR 10
 

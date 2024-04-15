@@ -199,10 +199,10 @@ void USART_callback(uint8_t *string) {
 	strncpy(temp, string, BUFFER_SIZE);
 
 	uint8_t *token = strtok(temp, " ");
-	while (token != NULL) {
-		instructions[i++] = token;
-		token = strtok(NULL, " ");
-	}
+	instructions[i++] = token;
+	token = strtok(NULL, "");
+	instructions[i++] = token;
+
 
 	message_handler(instructions[0], instructions[1]);
 }

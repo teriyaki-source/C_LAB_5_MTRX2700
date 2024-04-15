@@ -6,4 +6,4 @@
 ../Src/serial.c:159:6:USART1_EXTI25_IRQHandler	16	static
 ../Src/serial.c:170:6:SerialOutputChar	16	static
 ../Src/serial.c:178:6:SerialOutputString	24	static
-../Src/serial.c:193:6:USART_callback	152	static
+../Src/serial.c:193:6:USART_callback	192	static
