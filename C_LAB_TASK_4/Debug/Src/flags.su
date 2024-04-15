@@ -1,0 +1,2 @@
+../Src/flags.c:29:6:message_handler	16	static
+../Src/flags.c:49:6:flag_handler	8	static
