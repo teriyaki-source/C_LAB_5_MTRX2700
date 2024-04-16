@@ -22,9 +22,9 @@
 
 #include "serial.h"
 #include "flags.h"
-#include "initialisation.h"
 #include "stm32f303xc.h"
 #include "config.h"
+#include "config_timer.h"
 
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
@@ -37,6 +37,7 @@ int main(void)
 
 	SerialInitialise(BAUD_115200, &USART1_PORT, &USART_callback);
 	enable_uart_interrupt(&USART1_PORT);
+	timer_start_up();
 
 	/* Loop forever */
 	for(;;) {

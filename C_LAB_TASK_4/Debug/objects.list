@@ -1,5 +1,6 @@
+"./Src/config_timer.o"
 "./Src/flags.o"
-"./Src/initialisation.o"
+"./Src/interrupts.o"
 "./Src/led.o"
 "./Src/main.o"
 "./Src/serial.o"

@@ -1,5 +1,5 @@
-/Users/lukemarinaki/STM32CubeIDE/workspace_1.14.0/stm32f303-definitions/Core/Inc/core_cm4.h:1688:22:__NVIC_EnableIRQ	2
-/Users/lukemarinaki/STM32CubeIDE/workspace_1.14.0/stm32f303-definitions/Core/Inc/core_cm4.h:1816:22:__NVIC_SetPriority	2
+C:/Users/lykan/Desktop/Github/MTRX2700/MTRX2700-2024/stm32f303-definitions/Core/Inc/core_cm4.h:1688:22:__NVIC_EnableIRQ	2
+C:/Users/lykan/Desktop/Github/MTRX2700/MTRX2700-2024/stm32f303-definitions/Core/Inc/core_cm4.h:1816:22:__NVIC_SetPriority	2
 ../Src/serial.c:40:6:SerialInitialise	6
 ../Src/serial.c:109:6:getChar	6
 ../Src/serial.c:144:6:enable_uart_interrupt	1

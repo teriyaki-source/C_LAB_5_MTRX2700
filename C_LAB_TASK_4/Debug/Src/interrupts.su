@@ -1,0 +1,2 @@
+../Src/interrupts.c:16:6:TIM2_IRQHandler	8	static
+../Src/interrupts.c:35:6:TIM3_IRQHandler	8	static
