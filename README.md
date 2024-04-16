@@ -11,12 +11,12 @@ Task 4: All together
 ### Task 1:
 Author: Yunkan Luo
 #### Exercises:
-    a,b,c): Using the user input button on the board to change the pattern of LEDs.
+    a,b,c): Using the user input button on the board and treat it as an interrupt to change the pattern of LEDs.
     d):     Restrict the speed the pattern can be changed
 #### Instruction:
     *Press the user input button and the LEDs would be changed.
     *The time between two changes is set to be 1 second by default setting.
-    *Everytime the button is pressed one more LED would be light up, when all 8 LEDs are on, pressing the button would clear all the LEDs.
+    *The first time pressing the button would light up one LED, and any presses after that will shift the LED to the nearby location.
     *DO NOT make changes to any values inside the functions and definitions other than 'DELAY' inside "timer.h" file
 #### Testing Procedure:
     *The time length between two changes of LEDs can be customised by changing the defined constant 'DELAY' inside "timer.h" file (unit milliseconds).
@@ -40,9 +40,20 @@ Author: Yunkan Luo
     
 ### Task 4:
 #### Exercise:
-    
+    *Using the modules developed in the previous tasks to make a project that can give the board commands from
+     USART1.
 #### Instruction:
-    
+    *There are four types of acceptable commands:
+     1. led - to change the pattern of the LEDs by giving a 8 bits bitmask, with 1 represent on and 0 represent off.
+     2. serial - transmit a string from serial port, in this program it would be transmitted through USART1.
+     3. oneshot - creat a one-shot timer with a user specified time length in milliseconds.
+     4. timer - creat a continuous timer with a user specified period in milliseconds.
+    *The format of each command should follow:
+     led <8 bits bitmask with 0 or 1>
+     serial <the string to be transmitted>
+     oneshot <time in milliseconds>
+     timer <period in milliseconds>
+     (Replace <> with arguments that follow the description inside)
 #### Testing Procedure:
     
 ## Note
