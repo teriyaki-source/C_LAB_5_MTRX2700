@@ -6,7 +6,7 @@
 // Define callback functions for various interrupts
 extern void (*tim3_overflow_callback)();
 extern void (*tim2_ccr1_callback)();
-extern void (*button_press_callback)(uint16_t delay_ms, void (*one_shot_callback));
+//extern void (*button_press_callback)(uint16_t delay_ms, void (*one_shot_callback));
 
 
 // Handle interrupts for timer 2 (one-shot callback)
@@ -21,7 +21,7 @@ void TIM2_IRQHandler()
             tim2_ccr1_callback();  // Execute the registered callback function
         }
 
-        // Clear the channel 1 compare flag to prevent re-entering
+        // Clear the channel 1 compare flag to prCzxevent re-entering
         TIM2->SR &= ~TIM_SR_CC1IF;
     }
 }
