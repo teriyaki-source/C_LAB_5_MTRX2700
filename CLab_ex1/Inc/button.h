@@ -21,6 +21,7 @@ void led_flag_off();
 void modify_led();
 //function to call the start up function for this module
 void led_start_up();
-
+//function to check the flag and handle it
+void flag_check();
 
 #endif

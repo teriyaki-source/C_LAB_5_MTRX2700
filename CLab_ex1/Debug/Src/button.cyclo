@@ -8,3 +8,4 @@ C:/Users/lykan/Desktop/Github/MTRX2700/MTRX2700-2024/stm32f303-definitions/Core/
 ../Src/button.c:67:6:led_flag_off	1
 ../Src/button.c:73:6:modify_led	2
 ../Src/button.c:94:6:led_start_up	1
+../Src/button.c:103:6:flag_check	2

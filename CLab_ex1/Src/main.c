@@ -27,7 +27,6 @@
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
-extern uint8_t led_flag;
 
 int main(void)
 {
@@ -39,11 +38,6 @@ int main(void)
 	/*loop forever*/
 	for(;;)
 	{
-		if(led_flag == PRESSED)
-		{
-			modify_led();
-			timer_loop();
-			led_flag_off();
-		}
+		flag_check();
 	}
 }

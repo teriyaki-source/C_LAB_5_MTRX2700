@@ -99,3 +99,14 @@ void led_start_up()
 
 	enable_interrupt_button();
 }
+
+void flag_check()
+{
+	if(led_flag == PRESSED)
+	{
+		modify_led();
+		timer_loop();
+		led_flag_off();
+	}
+}
+
