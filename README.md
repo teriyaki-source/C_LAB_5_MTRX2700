@@ -48,7 +48,7 @@ Part B is where we use get/set functions to reset the timer with a new period. W
 Part C  We use TIM2 for the one shot event which is where after a 1000ms delay all the leds are inverted for a duration      3200ms where the periodic timer stil runs and thus, we should observe two cycles around the leds and return back to the      normal routine.
     
 #### High Level Information: 
-![Alt Text](/images/Task3.png "Function Flowchart")    
+![Alt Text](/images/task3.png "Function Flowchart")    
 #### Main.c:
 The program is structured to initialize the hardware first, configure the necessary interrupts, and then continuously        run while waiting for events (like button presses or timer expiries). It handles both periodic and one-shot tasks using      timers, with actions defined by callback functions. 
 
