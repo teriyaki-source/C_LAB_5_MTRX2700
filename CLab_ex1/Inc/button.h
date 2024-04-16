@@ -7,7 +7,8 @@
 #define NOT_PRESSED 0
 #define PRESSED 1
 
-
+//interrupt handler for button
+void EXTI0_IRQHandler();
 //enable interrupt for button (PA0)
 void enable_interrupt_button();
 //get the current status of led
@@ -18,6 +19,8 @@ void led_flag_on();
 void led_flag_off();
 //function to modify the led
 void modify_led();
+//function to call the start up function for this module
+void led_start_up();
 
 
 #endif

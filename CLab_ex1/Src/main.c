@@ -27,33 +27,12 @@
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
-#define DELAY 1000 //in ms
-
-//function pointer to a function when a button is pressed, set to NULL so when it not assigned to any
-//specific function it wont be called
-void (*button_pressed)() = 0x00;
 extern uint8_t led_flag;
-
-void EXTI0_IRQHandler()
-{
-	//call function button_pressed if its not NULL pointer
-	if (button_pressed != 0x00)
-	{
-		button_pressed();
-	}
-	EXTI->PR |= EXTI_PR_PR0;
-}
 
 int main(void)
 {
-    //settings for the boards
-	enable_clocks();
 
-	initialise_board();
-
-	button_pressed = led_flag_on;
-
-	enable_interrupt_button();
+	led_start_up();
 
 	start_timer();
 
@@ -63,7 +42,7 @@ int main(void)
 		if(led_flag == PRESSED)
 		{
 			modify_led();
-			timer_loop(DELAY);
+			timer_loop();
 			led_flag_off();
 		}
 	}

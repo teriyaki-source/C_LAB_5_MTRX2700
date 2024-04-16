@@ -3,6 +3,20 @@
 
 uint8_t led_flag;
 
+//function pointer to a function when a button is pressed, set to NULL so when it not assigned to any
+//specific function it wont be called
+void (*button_pressed)() = 0x00;
+
+void EXTI0_IRQHandler()
+{
+	//call function button_pressed if its not NULL pointer
+	if (button_pressed != 0x00)
+	{
+		button_pressed();
+	}
+	EXTI->PR |= EXTI_PR_PR0;
+}
+
 void enable_interrupt_button()
 {
 	// disable interrupt
@@ -24,6 +38,9 @@ void enable_interrupt_button()
 	// Tell the NVIC module that EXTI0 interrupts should be handled
 	NVIC_SetPriority(EXTI0_IRQn, 1);  // Set Priority
 	NVIC_EnableIRQ(EXTI0_IRQn);
+
+	//set handler function
+	button_pressed = led_flag_on;
 
 	// Re-enable interrupts
 	__enable_irq();
@@ -62,20 +79,23 @@ void modify_led()
 	//get the current bitmask for led
 	get_current_led(&bitmask);
 
-	//if the leds all on, resets everything
-	if(bitmask == 0b11111111)
-	{
-		bitmask = 0b00000000;
-	}
 
-	//otherwise turn one more on
-	else
+	bitmask <<= 1;
+	if (bitmask == 0)
 	{
-		bitmask <<= 1;
-		bitmask += 1;
+		bitmask = 1;
 	}
 
 	//store led bitmask back
 	store_led(bitmask);
 
+}
+
+void led_start_up()
+{
+	enable_clocks();
+
+	initialise_board();
+
+	enable_interrupt_button();
 }

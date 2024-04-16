@@ -23,9 +23,9 @@ void start_timer()
 
 }
 
-void timer_loop(uint32_t delay)
+void timer_loop()
 {
 	TIM2->CNT = 0;
-	while (TIM2->CNT < delay) {} ;
+	while (TIM2->CNT < DELAY) {} ;
 	//reset interrupt
 }
