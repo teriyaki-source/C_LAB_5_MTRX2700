@@ -38,6 +38,10 @@ void config_tim2_interrupts()
 	// Make timer 2 trigger an interrupt when there is
 	// a successful output compare (on channel 1)
 	TIM2->DIER |= TIM_DIER_CC1IE;
+	// We use the capture/compare1 interrupt enable TIM_DIER_CC1IE
+	// Setting this bit in the DMA and interrupt enable register (DIER)of TIM2
+	// This configures the timer to generate an interrupt when the timers counter (CNT)
+	// When CNT matchest the same value as CCR1
 
 	// Tell the NVIC module that timer 2 interrupts should be handled
 	NVIC_SetPriority(TIM2_IRQn, 2);  // set priority
@@ -53,9 +57,11 @@ void config_tim3_interrupts()
 {
 	// Disable the interrupts while messing around with the settings
 	__disable_irq();
-
+	// Activate the update interrupt (UIE) for Tim3
 	// Make the timer 3 trigger an interrupt when there is an overflow
 	TIM3->DIER |= TIM_DIER_UIE;
+	// Inherently periodic since it occurs every time
+	// That the timer completes counting up to the reload value
 
 	// Tell the NVIC module that timer 3 interrupts should be handled
 	NVIC_SetPriority(TIM3_IRQn, 3);  // set priority
