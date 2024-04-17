@@ -43,9 +43,6 @@ void chase_led();
 // Triggers a callback function after a certain delay
 void setup_one_shot_timer(uint16_t delay_ms, void (*one_shot_callback)());
 
-// Setup a one-shot timer, trigger LED toggle, and plan return to chase
-void setup_one_shot_timer(uint16_t delay_ms, void (*one_shot_callback)());
-
 void trigger_led_inversion();
 
 void toggle_leds_and_start_timer();
@@ -55,11 +52,11 @@ void resume_led_chase();
 // Function to configure or reset Timer 3 hardware with a new period
 static void configure_timer();
 
-void set_timer_period(uint32_t new_period);
+void set_timer_period(uint16_t new_period);
 void timer_start_up();
 uint16_t str_to_time(uint8_t* original);
 void oneshot_command(uint8_t *oneshot_length);
-void timer_command(uint8_t *timer_period);
+void timer_command(uint8_t *timer_interval);
 
 
 

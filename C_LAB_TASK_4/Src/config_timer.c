@@ -194,7 +194,7 @@ static void configure_timer() {
     TIM3->CR1 &= ~TIM_CR1_CEN;
 
     // Set the prescaler if necessary
-    TIM3->PSC = PRESCALER - 1;  // Prescaler setup, adjust as necessary
+    TIM3->PSC = PRESCALER;  // Prescaler setup, adjust as necessary
 
     // Set the auto-reload value to the current timer period
     TIM3->ARR = timer_period - 1;  // ARR value is period-1
@@ -206,7 +206,7 @@ static void configure_timer() {
     TIM3->CR1 |= TIM_CR1_CEN;
 }
 
-void set_timer_period(uint32_t new_period) {
+void set_timer_period(uint16_t new_period) {
     timer_period = new_period;  // Update the static variable holding the period
     configure_timer();  // Apply the new configuration
 }
@@ -222,9 +222,11 @@ void timer_start_up(){
 
 uint16_t str_to_time(uint8_t* original){
 
-	uint16_t *toks = strtok(original, "\r");
+	char *ptr;
 
-	return(*toks);
+	uint16_t time = strtol(original, &ptr, 10);
+
+	return(time);
 }
 
 void oneshot_command(uint8_t *oneshot_length){
@@ -236,9 +238,9 @@ void oneshot_command(uint8_t *oneshot_length){
 	setup_one_shot_timer(delay_ms, set_oneshot_flag);
 }
 
-void timer_command(uint8_t *timer_period){
+void timer_command(uint8_t *timer_interval){
 	// Change the timer period based on a condition or a new requirement
-	uint16_t new_period = str_to_time(timer_period);
+	uint16_t new_period = str_to_time(timer_interval);
 
 	set_timer_period(new_period);
 

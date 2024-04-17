@@ -7,19 +7,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         00001ddc  080001a0  080001a0  000011a0  2**4
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000268  08001f7c  08001f7c  00002f7c  2**2
+  2 .rodata       00000264  08001f7c  08001f7c  00002f7c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  080021e4  080021e4  00004090  2**0
+  3 .ARM.extab    00000000  080021e0  080021e0  00004090  2**0
                   CONTENTS
-  4 .ARM          00000008  080021e4  080021e4  000031e4  2**2
+  4 .ARM          00000008  080021e0  080021e0  000031e0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .preinit_array 00000000  080021ec  080021ec  00004090  2**0
+  5 .preinit_array 00000000  080021e8  080021e8  00004090  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  080021ec  080021ec  000031ec  2**2
+  6 .init_array   00000004  080021e8  080021e8  000031e8  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  080021f0  080021f0  000031f0  2**2
+  7 .fini_array   00000004  080021ec  080021ec  000031ec  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         00000090  20000000  080021f4  00004000  2**2
+  8 .data         00000090  20000000  080021f0  00004000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
   9 .ccmram       00000000  10000000  10000000  00004090  2**0
                   CONTENTS
@@ -31,23 +31,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
  13 .debug_info   00002bb6  00000000  00000000  000040c0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_abbrev 00000ca9  00000000  00000000  00006c76  2**0
+ 14 .debug_abbrev 00000cc4  00000000  00000000  00006c76  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_aranges 000002e0  00000000  00000000  00007920  2**3
+ 15 .debug_aranges 000002e0  00000000  00000000  00007940  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_rnglists 000001ff  00000000  00000000  00007c00  2**0
+ 16 .debug_rnglists 000001ff  00000000  00000000  00007c20  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  0001746f  00000000  00000000  00007dff  2**0
+ 17 .debug_macro  0001746f  00000000  00000000  00007e1f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   00003d8c  00000000  00000000  0001f26e  2**0
+ 18 .debug_line   00003d8f  00000000  00000000  0001f28e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    00078921  00000000  00000000  00022ffa  2**0
+ 19 .debug_str    0007892b  00000000  00000000  0002301d  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000043  00000000  00000000  0009b91b  2**0
+ 20 .comment      00000043  00000000  00000000  0009b948  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  000013d8  00000000  00000000  0009b960  2**2
+ 21 .debug_frame  000013d8  00000000  00000000  0009b98c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 22 .debug_line_str 00000065  00000000  00000000  0009cd38  2**0
+ 22 .debug_line_str 00000065  00000000  00000000  0009cd64  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -488,9 +488,9 @@ static void configure_timer() {
  800045a:	6013      	str	r3, [r2, #0]
 
     // Set the prescaler if necessary
-    TIM3->PSC = PRESCALER - 1;  // Prescaler setup, adjust as necessary
+    TIM3->PSC = PRESCALER;  // Prescaler setup, adjust as necessary
  800045c:	4b0b      	ldr	r3, [pc, #44]	@ (800048c <configure_timer+0x40>)
- 800045e:	f641 723e 	movw	r2, #7998	@ 0x1f3e
+ 800045e:	f641 723f 	movw	r2, #7999	@ 0x1f3f
  8000462:	629a      	str	r2, [r3, #40]	@ 0x28
 
     // Set the auto-reload value to the current timer period
@@ -525,23 +525,23 @@ static void configure_timer() {
 
 08000494 <set_timer_period>:
 
-void set_timer_period(uint32_t new_period) {
+void set_timer_period(uint16_t new_period) {
  8000494:	b580      	push	{r7, lr}
  8000496:	b082      	sub	sp, #8
  8000498:	af00      	add	r7, sp, #0
- 800049a:	6078      	str	r0, [r7, #4]
+ 800049a:	4603      	mov	r3, r0
+ 800049c:	80fb      	strh	r3, [r7, #6]
     timer_period = new_period;  // Update the static variable holding the period
- 800049c:	4a04      	ldr	r2, [pc, #16]	@ (80004b0 <set_timer_period+0x1c>)
- 800049e:	687b      	ldr	r3, [r7, #4]
- 80004a0:	6013      	str	r3, [r2, #0]
+ 800049e:	88fb      	ldrh	r3, [r7, #6]
+ 80004a0:	4a03      	ldr	r2, [pc, #12]	@ (80004b0 <set_timer_period+0x1c>)
+ 80004a2:	6013      	str	r3, [r2, #0]
     configure_timer();  // Apply the new configuration
- 80004a2:	f7ff ffd3 	bl	800044c <configure_timer>
+ 80004a4:	f7ff ffd2 	bl	800044c <configure_timer>
 }
- 80004a6:	bf00      	nop
- 80004a8:	3708      	adds	r7, #8
- 80004aa:	46bd      	mov	sp, r7
- 80004ac:	bd80      	pop	{r7, pc}
- 80004ae:	bf00      	nop
+ 80004a8:	bf00      	nop
+ 80004aa:	3708      	adds	r7, #8
+ 80004ac:	46bd      	mov	sp, r7
+ 80004ae:	bd80      	pop	{r7, pc}
  80004b0:	20000000 	.word	0x20000000
 
 080004b4 <timer_start_up>:
@@ -577,22 +577,24 @@ uint16_t str_to_time(uint8_t* original){
  80004e4:	af00      	add	r7, sp, #0
  80004e6:	6078      	str	r0, [r7, #4]
 
-	uint16_t *toks = strtok(original, "\r");
- 80004e8:	4905      	ldr	r1, [pc, #20]	@ (8000500 <str_to_time+0x20>)
- 80004ea:	6878      	ldr	r0, [r7, #4]
- 80004ec:	f000 fe4c 	bl	8001188 <strtok>
- 80004f0:	60f8      	str	r0, [r7, #12]
+	char *ptr;
 
-	return(*toks);
- 80004f2:	68fb      	ldr	r3, [r7, #12]
- 80004f4:	881b      	ldrh	r3, [r3, #0]
+	uint16_t time = strtol(original, &ptr, 10);
+ 80004e8:	f107 0308 	add.w	r3, r7, #8
+ 80004ec:	220a      	movs	r2, #10
+ 80004ee:	4619      	mov	r1, r3
+ 80004f0:	6878      	ldr	r0, [r7, #4]
+ 80004f2:	f000 fd1f 	bl	8000f34 <strtol>
+ 80004f6:	4603      	mov	r3, r0
+ 80004f8:	81fb      	strh	r3, [r7, #14]
+
+	return(time);
+ 80004fa:	89fb      	ldrh	r3, [r7, #14]
 }
- 80004f6:	4618      	mov	r0, r3
- 80004f8:	3710      	adds	r7, #16
- 80004fa:	46bd      	mov	sp, r7
- 80004fc:	bd80      	pop	{r7, pc}
- 80004fe:	bf00      	nop
- 8000500:	08001f7c 	.word	0x08001f7c
+ 80004fc:	4618      	mov	r0, r3
+ 80004fe:	3710      	adds	r7, #16
+ 8000500:	46bd      	mov	sp, r7
+ 8000502:	bd80      	pop	{r7, pc}
 
 08000504 <oneshot_command>:
 
@@ -629,13 +631,13 @@ void oneshot_command(uint8_t *oneshot_length){
 
 0800053c <timer_command>:
 
-void timer_command(uint8_t *timer_period){
+void timer_command(uint8_t *timer_interval){
  800053c:	b580      	push	{r7, lr}
  800053e:	b084      	sub	sp, #16
  8000540:	af00      	add	r7, sp, #0
  8000542:	6078      	str	r0, [r7, #4]
 	// Change the timer period based on a condition or a new requirement
-	uint16_t new_period = str_to_time(timer_period);
+	uint16_t new_period = str_to_time(timer_interval);
  8000544:	6878      	ldr	r0, [r7, #4]
  8000546:	f7ff ffcb 	bl	80004e0 <str_to_time>
  800054a:	4603      	mov	r3, r0
@@ -752,11 +754,11 @@ void message_handler(uint8_t* instruction, uint8_t *action){
  80005f2:	46bd      	mov	sp, r7
  80005f4:	bd80      	pop	{r7, pc}
  80005f6:	bf00      	nop
- 80005f8:	08001f80 	.word	0x08001f80
+ 80005f8:	08001f7c 	.word	0x08001f7c
  80005fc:	200000b4 	.word	0x200000b4
- 8000600:	08001f84 	.word	0x08001f84
- 8000604:	08001f8c 	.word	0x08001f8c
- 8000608:	08001f94 	.word	0x08001f94
+ 8000600:	08001f80 	.word	0x08001f80
+ 8000604:	08001f88 	.word	0x08001f88
+ 8000608:	08001f90 	.word	0x08001f90
 
 0800060c <set_oneshot_flag>:
 
@@ -835,8 +837,8 @@ void timer_handler(){
  800067a:	46bd      	mov	sp, r7
  800067c:	bd80      	pop	{r7, pc}
  800067e:	bf00      	nop
- 8000680:	08001f9c 	.word	0x08001f9c
- 8000684:	08001fb0 	.word	0x08001fb0
+ 8000680:	08001f98 	.word	0x08001f98
+ 8000684:	08001fac 	.word	0x08001fac
  8000688:	200000d4 	.word	0x200000d4
  800068c:	2000000c 	.word	0x2000000c
 
@@ -1815,8 +1817,8 @@ void USART_callback(uint8_t *string) {
  8000c52:	37b8      	adds	r7, #184	@ 0xb8
  8000c54:	46bd      	mov	sp, r7
  8000c56:	bd80      	pop	{r7, pc}
- 8000c58:	08001ffc 	.word	0x08001ffc
- 8000c5c:	08002000 	.word	0x08002000
+ 8000c58:	08001ff8 	.word	0x08001ff8
+ 8000c5c:	08001ffc 	.word	0x08001ffc
 
 08000c60 <_getpid>:
 void initialise_monitor_handles()
@@ -2216,7 +2218,7 @@ LoopForever:
   ldr r1, =_edata
  8000e2c:	20000090 	.word	0x20000090
   ldr r2, =_sidata
- 8000e30:	080021f4 	.word	0x080021f4
+ 8000e30:	080021f0 	.word	0x080021f0
   ldr r2, =_sbss
  8000e34:	20000090 	.word	0x20000090
   ldr r4, =_ebss
@@ -2332,7 +2334,7 @@ Infinite_Loop:
  8000f28:	d1f6      	bne.n	8000f18 <_strtol_l.constprop.0+0xd8>
  8000f2a:	f8c8 1000 	str.w	r1, [r8]
  8000f2e:	e794      	b.n	8000e5a <_strtol_l.constprop.0+0x1a>
- 8000f30:	08002002 	.word	0x08002002
+ 8000f30:	08001ffe 	.word	0x08001ffe
 
 08000f34 <strtol>:
  8000f34:	4613      	mov	r3, r2
@@ -2628,8 +2630,8 @@ Infinite_Loop:
  80011dc:	e8bd 41f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, lr}
  80011e0:	f000 b806 	b.w	80011f0 <__strtok_r>
  80011e4:	20000040 	.word	0x20000040
- 80011e8:	08002102 	.word	0x08002102
- 80011ec:	08002119 	.word	0x08002119
+ 80011e8:	080020fe 	.word	0x080020fe
+ 80011ec:	08002115 	.word	0x08002115
 
 080011f0 <__strtok_r>:
  80011f0:	b5f0      	push	{r4, r5, r6, r7, lr}
@@ -2771,10 +2773,10 @@ Infinite_Loop:
  800130a:	4798      	blx	r3
  800130c:	3601      	adds	r6, #1
  800130e:	e7f2      	b.n	80012f6 <__libc_init_array+0x1e>
- 8001310:	080021ec 	.word	0x080021ec
- 8001314:	080021ec 	.word	0x080021ec
- 8001318:	080021ec 	.word	0x080021ec
- 800131c:	080021f0 	.word	0x080021f0
+ 8001310:	080021e8 	.word	0x080021e8
+ 8001314:	080021e8 	.word	0x080021e8
+ 8001318:	080021e8 	.word	0x080021e8
+ 800131c:	080021ec 	.word	0x080021ec
 
 08001320 <__retarget_lock_init_recursive>:
  8001320:	4770      	bx	lr
@@ -2807,9 +2809,9 @@ Infinite_Loop:
  8001350:	e7f4      	b.n	800133c <__assert_func+0x14>
  8001352:	bf00      	nop
  8001354:	20000040 	.word	0x20000040
- 8001358:	080021ae 	.word	0x080021ae
- 800135c:	08002180 	.word	0x08002180
- 8001360:	08002173 	.word	0x08002173
+ 8001358:	080021aa 	.word	0x080021aa
+ 800135c:	0800217c 	.word	0x0800217c
+ 8001360:	0800216f 	.word	0x0800216f
 
 08001364 <_free_r>:
  8001364:	b538      	push	{r3, r4, r5, lr}
@@ -3501,11 +3503,11 @@ Infinite_Loop:
  8001974:	4630      	mov	r0, r6
  8001976:	f000 f879 	bl	8001a6c <_printf_i>
  800197a:	e7e4      	b.n	8001946 <_vfiprintf_r+0x1e6>
- 800197c:	080021af 	.word	0x080021af
- 8001980:	080021b9 	.word	0x080021b9
+ 800197c:	080021ab 	.word	0x080021ab
+ 8001980:	080021b5 	.word	0x080021b5
  8001984:	00000000 	.word	0x00000000
  8001988:	0800173d 	.word	0x0800173d
- 800198c:	080021b5 	.word	0x080021b5
+ 800198c:	080021b1 	.word	0x080021b1
 
 08001990 <_printf_common>:
  8001990:	e92d 47f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, lr}
@@ -3836,8 +3838,8 @@ Infinite_Loop:
  8001c9c:	f104 0619 	add.w	r6, r4, #25
  8001ca0:	e7f5      	b.n	8001c8e <_printf_i+0x222>
  8001ca2:	bf00      	nop
- 8001ca4:	080021c0 	.word	0x080021c0
- 8001ca8:	080021d1 	.word	0x080021d1
+ 8001ca4:	080021bc 	.word	0x080021bc
+ 8001ca8:	080021cd 	.word	0x080021cd
 
 08001cac <__swbuf_r>:
  8001cac:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
