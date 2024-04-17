@@ -9,7 +9,7 @@
 // Define callback functions for various interrupts
 void (*tim3_overflow_callback)() = 0x00;
 void (*tim2_ccr1_callback)() = 0x00;
-void (*button_press_callback)(uint16_t delay_ms, void (*one_shot_callback)) = 0x00;
+
 
 // Enable the clocks for desired peripherals
 void enable_clocks()
@@ -119,13 +119,21 @@ void set_autoreload(TIM_TypeDef *TIM, uint32_t autoreload_value)
 	TIM->ARR = autoreload_value;
 }
 
+void trigger_prescaler(TIM_TypeDef *TIM) {
+	TIM->ARR = 0x01;
+	TIM->CNT = 0x00;
+	asm("NOP");
+	asm("NOP");
+	asm("NOP");
+	TIM->ARR = 0xffffffff;
+}
 
 // Function to set the prescaler value for a specified timer
 void set_prescaler(TIM_TypeDef *TIM, uint16_t prescaler)
 {
     // Set the prescaler value for the timer, defining how the timer's clock is divided
     TIM->PSC = prescaler;
-
+	trigger_prescaler(TIM);
     // Trigger an update event to apply the new prescaler immediately and reset the timer counter
     TIM->EGR |= TIM_EGR_UG;
 }

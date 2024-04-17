@@ -100,6 +100,9 @@ void flag_handler(){
 		flags.oneshot_flag = 0;
 	}
 	if (flags.timer_flag){
+		if(flags.timer_action == "stop\r\n") {
+			TIM3->CR1 ^= TIM_CR1_CEN;
+		}
 		// start a repeated timer with set period
 		//SerialOutputString(flags.timer_action, &USART1_PORT);
 		timer_command(flags.timer_action);
