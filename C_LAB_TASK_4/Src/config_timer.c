@@ -120,14 +120,12 @@ void set_autoreload(TIM_TypeDef *TIM, uint32_t autoreload_value)
 }
 
 void trigger_prescaler(TIM_TypeDef *TIM) {
-	__disable_irq();
 	TIM->ARR = 0x01;
 	TIM->CNT = 0x00;
 	asm("NOP");
 	asm("NOP");
 	asm("NOP");
 	TIM->ARR = 0xffffffff;
-	__enable_irq();
 }
 
 // Function to set the prescaler value for a specified timer
@@ -200,11 +198,9 @@ static uint32_t timer_period = INTERVAL_MS;  // Initial default period
 
 // Function to configure or reset Timer 3 hardware with a new period
 static void configure_timer() {
-    // Disable Timer 3 while updating settings to avoid glitches
+	// Disable Timer 3 while updating settings to avoid glitches
+    TIM3->CNT = 0x00;
     TIM3->CR1 &= ~TIM_CR1_CEN;
-
-    // Set the prescaler if necessary
-    TIM3->PSC = PRESCALER;  // Prescaler setup, adjust as necessary
 
     // Set the auto-reload value to the current timer period
     TIM3->ARR = timer_period - 1;  // ARR value is period-1
@@ -228,6 +224,9 @@ void timer_start_up(){
 
 	config_tim2_interrupts();  // timer 2 is used for the one-shot delay
 	config_tim3_interrupts();  // timer 3 is used for the periodic callback
+	// Set the function pointers used in the interrupt handlers
+	// to their corresponding callback functions
+	tim3_overflow_callback = set_continuous_flag;
 }
 
 uint16_t str_to_time(uint8_t* original){
@@ -250,15 +249,8 @@ void oneshot_command(uint8_t *oneshot_length){
 
 void timer_command(uint8_t *timer_interval){
 	// Change the timer period based on a condition or a new requirement
-	TIM3->CNT = 0x00;
+
 	uint16_t new_period = str_to_time(timer_interval);
 
 	set_timer_period(new_period);
-
-	// Set the function pointers used in the interrupt handlers
-	// to their corresponding callback functions
-	tim3_overflow_callback = set_continuous_flag;
-
-	// Start the timer 3 counter
-	TIM3->CR1 |= TIM_CR1_CEN;
 }

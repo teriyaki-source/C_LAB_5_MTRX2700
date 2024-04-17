@@ -80,8 +80,8 @@ void timer_handler(){
 
 void flag_handler(){
 	// not operating in interrupt
-	// action based on flag, needs to reset flag after action complete
 	timer_handler();
+	// action based on flag, needs to reset flag after action complete
 	if (flags.led_flag){
 		// set LED bits
 //		SerialOutputString(flags.led_action, &USART1_PORT);
@@ -100,12 +100,17 @@ void flag_handler(){
 		flags.oneshot_flag = 0;
 	}
 	if (flags.timer_flag){
-		if(flags.timer_action == "stop\r\n") {
-			TIM3->CR1 ^= TIM_CR1_CEN;
+		if(!strcmp(flags.timer_action, "stop\r\n")) {
+			TIM3->CR1 &= ~TIM_CR1_CEN;
 		}
+		else{
 		// start a repeated timer with set period
 		//SerialOutputString(flags.timer_action, &USART1_PORT);
-		timer_command(flags.timer_action);
+			timer_command(flags.timer_action);
+		}
 		flags.timer_flag = 0;
+		timer_flags.continuous_flag = 0;
 	}
 }
+
+
