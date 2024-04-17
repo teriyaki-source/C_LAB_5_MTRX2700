@@ -17,12 +17,16 @@ d):     Restrict the speed the pattern can be changed
 * Press the user input button and the LEDs would be changed.
 * The time between two changes is set to be 1 second by default setting.
 * The first time pressing the button would light up one LED, and any presses after that will shift the LED to the nearby location.
+* During the setted time length, even if the button is pressed there should not be any change in the LEDs.
+  (i.e. All button press would be ignored during the fixed delay time)
 * DO NOT make changes to any values inside the functions and definitions other than 'DELAY' inside "timer.h" file
 #### Testing Procedure:
+* initialisation.c contains function for setting up for the board, including enabling clock for the button and enabling the LEDs, when the board is not performing as desired please check this section first.
+* button.c contains settings for interrupt for the button and modifying LEDs, under the case that it is confirmed that initialisation of the board is correct, please check the modify_led() function in this file. put breakpoints in it and check for LED bitmask in variable.
+* button.c has function to get the current LED bitmask (get_current_led()), use this function to check for LED status.
+* timer.c contains functions to start the timer and set pre-scalar of the timer. When noticed the delayed time between each LED change is not correct, please check this section.
+* The formula for calculating the pre-scalar is: ((clock_speed)/(desired_frequency)) -1 = pre-scalar. In this project, the clock speed is set to be 8MHz and frequency 1kHz, using the formula, calculated pre-scalar is 7999.
 * The time length between two changes of LEDs can be customised by changing the defined constant 'DELAY' inside "timer.h" file (unit milliseconds).
-* During the setted time length, even if the button is pressed there should not be any change in the LEDs.
-     (i.e. All button press would be ignored during the fixed delay time)
-* Current LED bit mask can be accessed by the function get_current_led(), this function takes an input of a uint8_t pointer to store the current bitmask.
     
 ### Task 2:
 Author Luke Marinaki
@@ -91,25 +95,30 @@ Contains functions to toggle LEDs, set timer parameters like prescalers and auto
     
 ### Task 4:
 #### Exercise:
-    *Using the modules developed in the previous tasks to make a project that can give the board commands through USART1.
+* Using the modules developed in the previous tasks to make a project that can give the board commands through USART1.
 #### Instruction:
-    *There are four types of acceptable commands:
-     1. led - to change the pattern of the LEDs by giving a 8 bits bitmask, with 1 represent on and 0 represent off.
-     2. serial - transmit a string from serial port, in this program it would be transmitted through USART1.
-     3. oneshot - creat a one-shot timer with a user specified time length in milliseconds.
-     4. timer - creat a continuous timer with a user specified period in milliseconds.
-
-    *The format of each command should follow:
-     - led <8 bits bitmask with 0 or 1>
-     - serial <the string to be transmitted>
-     - oneshot <time in milliseconds>
-     - timer <period in milliseconds>
-     (Replace <> with arguments that follow the description inside)
+* There are four types of acceptable commands:
+1. led - to change the pattern of the LEDs by giving a 8 bits bitmask, with 1 represent on and 0 represent off.
+2. serial - transmit a string from serial port, in this program it would be transmitted through USART1.
+3. oneshot - creat a one-shot timer with a user specified time length in milliseconds.
+4. timer - creat a continuous timer with a user specified period in milliseconds.
+* The format of each command should follow:
+   - led <8 bits bitmask with 0 or 1>
+   - serial <the string to be transmitted>
+   - oneshot <time in milliseconds>
+   - timer <period in milliseconds>
+   - timer stop (command to stop the previous timer)
+   (Replace <> with arguments that follow the description inside)
 #### Testing Procedure:
-    LED configuration constants:
-
-    Serial configuration constants:
-    "config.h"
+* LED module:
+  * functions to get/set LED bitmask.
+  * converting input string into 8 bit bitmask.
+  * function to modify the LED bitmask based on the input.
+  * Constants :
+    * MASK_LENGTH: length of the bitmask for LEDs, DO NOT CHANGE.
+    * OB_OFFSET: constant required when converting string input into binary bitmask, DO NOT CHANGE.
+* Serial configuration constants:
+  - "config.h"
     - BUFFER_SIZE determines the number of characters can be sent in one message
     - TERMINATION_CHAR determines the ASCII value of the character to signify end of message
     Timer configuration constants:
