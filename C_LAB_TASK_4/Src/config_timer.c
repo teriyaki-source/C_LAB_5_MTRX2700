@@ -120,12 +120,14 @@ void set_autoreload(TIM_TypeDef *TIM, uint32_t autoreload_value)
 }
 
 void trigger_prescaler(TIM_TypeDef *TIM) {
+	__disable_irq();
 	TIM->ARR = 0x01;
 	TIM->CNT = 0x00;
 	asm("NOP");
 	asm("NOP");
 	asm("NOP");
 	TIM->ARR = 0xffffffff;
+	__enable_irq();
 }
 
 // Function to set the prescaler value for a specified timer
@@ -248,6 +250,7 @@ void oneshot_command(uint8_t *oneshot_length){
 
 void timer_command(uint8_t *timer_interval){
 	// Change the timer period based on a condition or a new requirement
+	TIM3->CNT = 0x00;
 	uint16_t new_period = str_to_time(timer_interval);
 
 	set_timer_period(new_period);
