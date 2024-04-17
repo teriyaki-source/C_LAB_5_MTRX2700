@@ -28,6 +28,8 @@ void set_compare_channel_1(TIM_TypeDef *TIM, uint32_t compare_value);
 
 void set_autoreload(TIM_TypeDef *TIM, uint32_t autoreload_value);
 
+void trigger_prescaler(TIM_TypeDef *TIM);
+
 void set_prescaler(TIM_TypeDef *TIM, uint16_t prescaler);
 
 void turn_on_led(uint8_t led_mask_pattern);
