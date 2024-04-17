@@ -1,9 +1,9 @@
-C:/Users/lykan/Desktop/Github/MTRX2700/MTRX2700-2024/stm32f303-definitions/Core/Inc/core_cm4.h:1688:22:__NVIC_EnableIRQ	16	static
-C:/Users/lykan/Desktop/Github/MTRX2700/MTRX2700-2024/stm32f303-definitions/Core/Inc/core_cm4.h:1816:22:__NVIC_SetPriority	16	static
+/Users/lukemarinaki/STM32CubeIDE/workspace_1.14.0/stm32f303-definitions/Core/Inc/core_cm4.h:1688:22:__NVIC_EnableIRQ	16	static
+/Users/lukemarinaki/STM32CubeIDE/workspace_1.14.0/stm32f303-definitions/Core/Inc/core_cm4.h:1816:22:__NVIC_SetPriority	16	static
 ../Src/serial.c:40:6:SerialInitialise	32	static
 ../Src/serial.c:109:6:getChar	32	static
-../Src/serial.c:144:6:enable_uart_interrupt	16	static,ignoring_inline_asm
-../Src/serial.c:159:6:USART1_EXTI25_IRQHandler	16	static
-../Src/serial.c:170:6:SerialOutputChar	16	static
-../Src/serial.c:178:6:SerialOutputString	24	static
-../Src/serial.c:193:6:USART_callback	192	static
+../Src/serial.c:145:6:enable_uart_interrupt	16	static,ignoring_inline_asm
+../Src/serial.c:160:6:USART1_EXTI25_IRQHandler	16	static
+../Src/serial.c:171:6:SerialOutputChar	16	static
+../Src/serial.c:179:6:SerialOutputString	24	static
+../Src/serial.c:194:6:USART_callback	192	static

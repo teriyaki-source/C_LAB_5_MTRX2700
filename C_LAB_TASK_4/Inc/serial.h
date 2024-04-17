@@ -25,7 +25,7 @@ enum {
   BAUD_115200
 };
 
-void SerialInitialise(uint32_t baudRate, SerialPort *serial_port, void (*completion_function)(uint32_t));
+void SerialInitialise(uint32_t baudRate, SerialPort *serial_port, void (*completion_function)(uint8_t*, uint8_t));
 
 void getChar(SerialPort *serial_port, uint8_t* buffer, uint8_t* last_word, int* i);
 
@@ -43,6 +43,6 @@ void SerialOutputChar(uint8_t, SerialPort *serial_port);
 // SerialOutputString - output a NULL TERMINATED string to the serial port
 // Input: pointer to a NULL-TERMINATED string (if not null terminated, there will be problems)
 void SerialOutputString(uint8_t *pt, SerialPort *serial_port);
-void USART_callback(uint8_t *string);
+void USART_callback(uint8_t *string, uint8_t count);
 
 #endif
