@@ -17,7 +17,7 @@ struct _SerialPort {
 	volatile uint32_t SerialPinSpeedValue;
 	volatile uint32_t SerialPinAlternatePinValueLow;
 	volatile uint32_t SerialPinAlternatePinValueHigh;
-	void (*completion_function)(uint32_t);
+	void (*completion_function)(uint8_t*, uint8_t);
 };
 
 
@@ -37,7 +37,7 @@ SerialPort USART1_PORT = {USART1,
 
 // InitialiseSerial - Initialise the serial port
 // Input: baudRate is from an enumerated set
-void SerialInitialise(uint32_t baudRate, SerialPort *serial_port, void (*completion_function)(uint32_t)) {
+void SerialInitialise(uint32_t baudRate, SerialPort *serial_port, void (*completion_function)(uint8_t*, uint8_t)) {
 
 	serial_port->completion_function = completion_function;
 
@@ -124,14 +124,15 @@ void getChar(SerialPort *serial_port, uint8_t* buffer, uint8_t* last_word, int* 
 			// add a newline to the buffer for better output aesthetic
 			buffer[x+1] = NEWLINE_CHAR;
 			// can be removed - demonstrate double buffer
-			SerialOutputString(buffer, &USART1_PORT);
 //			SerialOutputString(last_word, &USART1_PORT);
 			// any additional handling should go here - before buffer is cleared
 
-			serial_port->completion_function(buffer);
+
 
 			// copy word to previous word and then clear current buffer
 			strncpy(last_word, buffer, BUFFER_SIZE);
+			serial_port->completion_function(last_word, x);
+			SerialOutputString(last_word, &USART1_PORT);
 			for (int j = 0; j < BUFFER_SIZE; j++){
 				buffer[j] = 0;
 			}
@@ -190,7 +191,7 @@ void SerialOutputString(uint8_t *pt, SerialPort *serial_port) {
 ||------------------------------||
 */
 
-void USART_callback(uint8_t *string) {
+void USART_callback(uint8_t *string, uint8_t count) {
 // This function will be called after a transmission is complete
 	// use a temporary var to avoid original buffer from being modified
 	uint8_t *temp[BUFFER_SIZE] = {0};
