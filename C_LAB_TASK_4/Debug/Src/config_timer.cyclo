@@ -19,6 +19,6 @@ C:/Users/lykan/Desktop/Github/MTRX2700/MTRX2700-2024/stm32f303-definitions/Core/
 ../Src/config_timer.c:200:13:configure_timer	1
 ../Src/config_timer.c:215:6:set_timer_period	1
 ../Src/config_timer.c:221:6:timer_start_up	1
-../Src/config_timer.c:233:10:str_to_time	1
-../Src/config_timer.c:242:6:oneshot_command	1
-../Src/config_timer.c:251:6:timer_command	1
+../Src/config_timer.c:232:10:str_to_time	1
+../Src/config_timer.c:241:6:oneshot_command	1
+../Src/config_timer.c:250:6:timer_command	1

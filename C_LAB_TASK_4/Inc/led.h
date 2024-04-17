@@ -5,9 +5,6 @@
 #include "stm32f303xc.h"
 #include "serial.h"
 
-#define NOT_PRESSED 0
-#define PRESSED 1
-
 #define MASK_LENGTH 8
 #define OB_OFFSET 2
 

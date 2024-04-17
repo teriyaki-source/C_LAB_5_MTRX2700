@@ -17,7 +17,7 @@ void store_led(uint8_t bitmask)
 uint8_t str_to_bin(uint8_t* original){
 	char* ptr;
 
-	uint8_t target = strtol(original, &ptr, 2);
+	uint8_t target = strtol(original, &ptr, OB_OFFSET);
 	return(target);
 
 }

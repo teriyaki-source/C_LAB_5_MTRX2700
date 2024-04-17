@@ -17,14 +17,14 @@ struct _Flags {
 };
 
 Flags flags = {
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
-	0,
+	OFF,
+	OFF,
+	OFF,
+	OFF,
+	OFF,
+	OFF,
+	OFF,
+	OFF,
 };
 
 struct _Timer_Flags{
@@ -33,37 +33,37 @@ struct _Timer_Flags{
 };
 
 Timer_flags timer_flags = {
-	0,
-	0,
+	OFF,
+	OFF,
 };
 
 
 void message_handler(uint8_t* instruction, uint8_t *action){
 	// still operating in interrupt
 	if (!strcmp(instruction, "led")) {
-		flags.led_flag = 1;
+		flags.led_flag = ON;
 		flags.led_action = action;
 	}
 	if (!strcmp(instruction, "serial")) {
-		flags.serial_flag = 1;
+		flags.serial_flag = ON;
 		flags.serial_action = action;
 	}
 	if (!strcmp(instruction, "oneshot")) {
-		flags.oneshot_flag = 1;
+		flags.oneshot_flag = ON;
 		flags.oneshot_action = action;
 	}
 	if (!strcmp(instruction, "timer")) {
-		flags.timer_flag = 1;
+		flags.timer_flag = ON;
 		flags.timer_action = action;
 	}
 }
 
 void set_oneshot_flag(){
-	timer_flags.oneshot_flag = 1;
+	timer_flags.oneshot_flag = ON;
 }
 
 void set_continuous_flag(){
-	timer_flags.continuous_flag = 1;
+	timer_flags.continuous_flag = ON;
 }
 
 void timer_handler(){
@@ -72,10 +72,10 @@ void timer_handler(){
 
 	if(timer_flags.oneshot_flag)
 		SerialOutputString(oneshot_message, &USART1_PORT);
-		timer_flags.oneshot_flag = 0;
+		timer_flags.oneshot_flag = OFF;
 	if(timer_flags.continuous_flag)
 		SerialOutputString(continuous_message, &USART1_PORT);
-		timer_flags.continuous_flag = 0;
+		timer_flags.continuous_flag = OFF;
 }
 
 void flag_handler(){
@@ -86,18 +86,18 @@ void flag_handler(){
 		// set LED bits
 //		SerialOutputString(flags.led_action, &USART1_PORT);
 		modify_led(flags.led_action);
-		flags.led_flag = 0;
+		flags.led_flag = OFF;
 	}
 	if (flags.serial_flag){
 		// send output message
 		SerialOutputString(flags.serial_action, &USART1_PORT);
-		flags.serial_flag = 0;
+		flags.serial_flag = OFF;
 	}
 	if (flags.oneshot_flag){
 		// start a oneshot timer with set period
 		//SerialOutputString(flags.oneshot_action, &USART1_PORT);
 		oneshot_command(flags.oneshot_action);
-		flags.oneshot_flag = 0;
+		flags.oneshot_flag = OFF;
 	}
 	if (flags.timer_flag){
 		if(!strcmp(flags.timer_action, "stop\r\n")) {
@@ -108,8 +108,8 @@ void flag_handler(){
 		//SerialOutputString(flags.timer_action, &USART1_PORT);
 			timer_command(flags.timer_action);
 		}
-		flags.timer_flag = 0;
-		timer_flags.continuous_flag = 0;
+		flags.timer_flag = OFF;
+		timer_flags.continuous_flag = OFF;
 	}
 }
 

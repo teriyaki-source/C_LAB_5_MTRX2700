@@ -12,6 +12,9 @@
 #include "config.h"
 #include "serial.h"
 
+#define ON 1
+#define OFF 0
+
 struct _Flags;
 typedef struct _Flags Flags;
 

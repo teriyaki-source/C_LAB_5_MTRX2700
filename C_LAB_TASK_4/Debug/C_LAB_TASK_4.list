@@ -37,17 +37,17 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_rnglists 00000206  00000000  00000000  00007dc8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_macro  0001746f  00000000  00000000  00007fce  2**0
+ 17 .debug_macro  00017485  00000000  00000000  00007fce  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   00003dbf  00000000  00000000  0001f43d  2**0
+ 18 .debug_line   00003dbf  00000000  00000000  0001f453  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    0007892d  00000000  00000000  000231fc  2**0
+ 19 .debug_str    0007891b  00000000  00000000  00023212  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000043  00000000  00000000  0009bb29  2**0
+ 20 .comment      00000043  00000000  00000000  0009bb2d  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  000013fc  00000000  00000000  0009bb6c  2**2
+ 21 .debug_frame  000013fc  00000000  00000000  0009bb70  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 22 .debug_line_str 00000065  00000000  00000000  0009cf68  2**0
+ 22 .debug_line_str 00000065  00000000  00000000  0009cf6c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -601,7 +601,6 @@ void timer_start_up(){
  8000502:	4b03      	ldr	r3, [pc, #12]	@ (8000510 <timer_start_up+0x30>)
  8000504:	4a03      	ldr	r2, [pc, #12]	@ (8000514 <timer_start_up+0x34>)
  8000506:	601a      	str	r2, [r3, #0]
-
 }
  8000508:	bf00      	nop
  800050a:	bd80      	pop	{r7, pc}
@@ -688,9 +687,6 @@ void timer_command(uint8_t *timer_interval){
  8000586:	89fb      	ldrh	r3, [r7, #14]
  8000588:	4618      	mov	r0, r3
  800058a:	f7ff ff99 	bl	80004c0 <set_timer_period>
-
-	// Start the timer 3 counter
-	//TIM3->CR1 |= TIM_CR1_CEN;
 }
  800058e:	bf00      	nop
  8000590:	3710      	adds	r7, #16
@@ -699,8 +695,8 @@ void timer_command(uint8_t *timer_interval){
 	...
 
 08000598 <message_handler>:
-	0,
-	0,
+	OFF,
+	OFF,
 };
 
 
@@ -718,7 +714,7 @@ void message_handler(uint8_t* instruction, uint8_t *action){
  80005aa:	4603      	mov	r3, r0
  80005ac:	2b00      	cmp	r3, #0
  80005ae:	d105      	bne.n	80005bc <message_handler+0x24>
-		flags.led_flag = 1;
+		flags.led_flag = ON;
  80005b0:	4b19      	ldr	r3, [pc, #100]	@ (8000618 <message_handler+0x80>)
  80005b2:	2201      	movs	r2, #1
  80005b4:	601a      	str	r2, [r3, #0]
@@ -734,7 +730,7 @@ void message_handler(uint8_t* instruction, uint8_t *action){
  80005c4:	4603      	mov	r3, r0
  80005c6:	2b00      	cmp	r3, #0
  80005c8:	d105      	bne.n	80005d6 <message_handler+0x3e>
-		flags.serial_flag = 1;
+		flags.serial_flag = ON;
  80005ca:	4b13      	ldr	r3, [pc, #76]	@ (8000618 <message_handler+0x80>)
  80005cc:	2201      	movs	r2, #1
  80005ce:	609a      	str	r2, [r3, #8]
@@ -750,7 +746,7 @@ void message_handler(uint8_t* instruction, uint8_t *action){
  80005de:	4603      	mov	r3, r0
  80005e0:	2b00      	cmp	r3, #0
  80005e2:	d105      	bne.n	80005f0 <message_handler+0x58>
-		flags.oneshot_flag = 1;
+		flags.oneshot_flag = ON;
  80005e4:	4b0c      	ldr	r3, [pc, #48]	@ (8000618 <message_handler+0x80>)
  80005e6:	2201      	movs	r2, #1
  80005e8:	611a      	str	r2, [r3, #16]
@@ -766,7 +762,7 @@ void message_handler(uint8_t* instruction, uint8_t *action){
  80005f8:	4603      	mov	r3, r0
  80005fa:	2b00      	cmp	r3, #0
  80005fc:	d105      	bne.n	800060a <message_handler+0x72>
-		flags.timer_flag = 1;
+		flags.timer_flag = ON;
  80005fe:	4b06      	ldr	r3, [pc, #24]	@ (8000618 <message_handler+0x80>)
  8000600:	2201      	movs	r2, #1
  8000602:	619a      	str	r2, [r3, #24]
@@ -792,7 +788,7 @@ void message_handler(uint8_t* instruction, uint8_t *action){
 void set_oneshot_flag(){
  8000628:	b480      	push	{r7}
  800062a:	af00      	add	r7, sp, #0
-	timer_flags.oneshot_flag = 1;
+	timer_flags.oneshot_flag = ON;
  800062c:	4b03      	ldr	r3, [pc, #12]	@ (800063c <set_oneshot_flag+0x14>)
  800062e:	2201      	movs	r2, #1
  8000630:	701a      	strb	r2, [r3, #0]
@@ -808,7 +804,7 @@ void set_oneshot_flag(){
 void set_continuous_flag(){
  8000640:	b480      	push	{r7}
  8000642:	af00      	add	r7, sp, #0
-	timer_flags.continuous_flag = 1;
+	timer_flags.continuous_flag = ON;
  8000644:	4b03      	ldr	r3, [pc, #12]	@ (8000654 <set_continuous_flag+0x14>)
  8000646:	2201      	movs	r2, #1
  8000648:	705a      	strb	r2, [r3, #1]
@@ -841,7 +837,7 @@ void timer_handler(){
  800066e:	490e      	ldr	r1, [pc, #56]	@ (80006a8 <timer_handler+0x50>)
  8000670:	6878      	ldr	r0, [r7, #4]
  8000672:	f000 fab2 	bl	8000bda <SerialOutputString>
-		timer_flags.oneshot_flag = 0;
+		timer_flags.oneshot_flag = OFF;
  8000676:	4b0b      	ldr	r3, [pc, #44]	@ (80006a4 <timer_handler+0x4c>)
  8000678:	2200      	movs	r2, #0
  800067a:	701a      	strb	r2, [r3, #0]
@@ -854,7 +850,7 @@ void timer_handler(){
  8000684:	4908      	ldr	r1, [pc, #32]	@ (80006a8 <timer_handler+0x50>)
  8000686:	6838      	ldr	r0, [r7, #0]
  8000688:	f000 faa7 	bl	8000bda <SerialOutputString>
-		timer_flags.continuous_flag = 0;
+		timer_flags.continuous_flag = OFF;
  800068c:	4b05      	ldr	r3, [pc, #20]	@ (80006a4 <timer_handler+0x4c>)
  800068e:	2200      	movs	r2, #0
  8000690:	705a      	strb	r2, [r3, #1]
@@ -890,7 +886,7 @@ void flag_handler(){
  80006be:	685b      	ldr	r3, [r3, #4]
  80006c0:	4618      	mov	r0, r3
  80006c2:	f000 f8c3 	bl	800084c <modify_led>
-		flags.led_flag = 0;
+		flags.led_flag = OFF;
  80006c6:	4b1e      	ldr	r3, [pc, #120]	@ (8000740 <flag_handler+0x94>)
  80006c8:	2200      	movs	r2, #0
  80006ca:	601a      	str	r2, [r3, #0]
@@ -907,7 +903,7 @@ void flag_handler(){
  80006d8:	491a      	ldr	r1, [pc, #104]	@ (8000744 <flag_handler+0x98>)
  80006da:	4618      	mov	r0, r3
  80006dc:	f000 fa7d 	bl	8000bda <SerialOutputString>
-		flags.serial_flag = 0;
+		flags.serial_flag = OFF;
  80006e0:	4b17      	ldr	r3, [pc, #92]	@ (8000740 <flag_handler+0x94>)
  80006e2:	2200      	movs	r2, #0
  80006e4:	609a      	str	r2, [r3, #8]
@@ -924,7 +920,7 @@ void flag_handler(){
  80006f0:	695b      	ldr	r3, [r3, #20]
  80006f2:	4618      	mov	r0, r3
  80006f4:	f7ff ff22 	bl	800053c <oneshot_command>
-		flags.oneshot_flag = 0;
+		flags.oneshot_flag = OFF;
  80006f8:	4b11      	ldr	r3, [pc, #68]	@ (8000740 <flag_handler+0x94>)
  80006fa:	2200      	movs	r2, #0
  80006fc:	611a      	str	r2, [r3, #16]
@@ -960,11 +956,11 @@ void flag_handler(){
  800072a:	4618      	mov	r0, r3
  800072c:	f7ff ff22 	bl	8000574 <timer_command>
 		}
-		flags.timer_flag = 0;
+		flags.timer_flag = OFF;
  8000730:	4b03      	ldr	r3, [pc, #12]	@ (8000740 <flag_handler+0x94>)
  8000732:	2200      	movs	r2, #0
  8000734:	619a      	str	r2, [r3, #24]
-		timer_flags.continuous_flag = 0;
+		timer_flags.continuous_flag = OFF;
  8000736:	4b06      	ldr	r3, [pc, #24]	@ (8000750 <flag_handler+0xa4>)
  8000738:	2200      	movs	r2, #0
  800073a:	705a      	strb	r2, [r3, #1]
@@ -1139,7 +1135,7 @@ uint8_t str_to_bin(uint8_t* original){
  800082e:	6078      	str	r0, [r7, #4]
 	char* ptr;
 
-	uint8_t target = strtol(original, &ptr, 2);
+	uint8_t target = strtol(original, &ptr, OB_OFFSET);
  8000830:	f107 0308 	add.w	r3, r7, #8
  8000834:	2202      	movs	r2, #2
  8000836:	4619      	mov	r1, r3

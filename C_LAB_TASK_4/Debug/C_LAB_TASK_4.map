@@ -136,6 +136,7 @@ Discarded input sections
  .group         0x00000000        0xc ./Src/config_timer.o
  .group         0x00000000        0xc ./Src/config_timer.o
  .group         0x00000000        0xc ./Src/config_timer.o
+ .group         0x00000000        0xc ./Src/config_timer.o
  .text          0x00000000        0x0 ./Src/config_timer.o
  .data          0x00000000        0x0 ./Src/config_timer.o
  .bss           0x00000000        0x0 ./Src/config_timer.o
@@ -157,6 +158,7 @@ Discarded input sections
                 0x00000000       0x1c ./Src/config_timer.o
  .text.resume_led_chase
                 0x00000000       0x1c ./Src/config_timer.o
+ .group         0x00000000        0xc ./Src/flags.o
  .group         0x00000000        0xc ./Src/flags.o
  .group         0x00000000        0xc ./Src/flags.o
  .group         0x00000000        0xc ./Src/flags.o
@@ -226,6 +228,8 @@ Discarded input sections
  .debug_macro   0x00000000       0x10 ./Src/flags.o
  .debug_macro   0x00000000       0x35 ./Src/flags.o
  .debug_macro   0x00000000       0x20 ./Src/flags.o
+ .debug_macro   0x00000000       0x10 ./Src/flags.o
+ .group         0x00000000        0xc ./Src/interrupts.o
  .group         0x00000000        0xc ./Src/interrupts.o
  .group         0x00000000        0xc ./Src/interrupts.o
  .group         0x00000000        0xc ./Src/interrupts.o
@@ -278,6 +282,7 @@ Discarded input sections
  .debug_macro   0x00000000    0x12a3a ./Src/interrupts.o
  .debug_macro   0x00000000       0x22 ./Src/interrupts.o
  .debug_macro   0x00000000       0x1c ./Src/interrupts.o
+ .debug_macro   0x00000000       0x10 ./Src/interrupts.o
  .debug_macro   0x00000000       0x61 ./Src/interrupts.o
  .debug_macro   0x00000000       0x2a ./Src/interrupts.o
  .debug_macro   0x00000000       0x43 ./Src/interrupts.o
@@ -295,6 +300,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x10 ./Src/interrupts.o
  .debug_macro   0x00000000       0x35 ./Src/interrupts.o
  .debug_macro   0x00000000       0x20 ./Src/interrupts.o
+ .group         0x00000000        0xc ./Src/led.o
  .group         0x00000000        0xc ./Src/led.o
  .group         0x00000000        0xc ./Src/led.o
  .group         0x00000000        0xc ./Src/led.o
@@ -349,6 +355,7 @@ Discarded input sections
  .debug_macro   0x00000000      0x11f ./Src/led.o
  .debug_macro   0x00000000    0x12a3a ./Src/led.o
  .debug_macro   0x00000000       0x1c ./Src/led.o
+ .debug_macro   0x00000000       0x10 ./Src/led.o
  .debug_macro   0x00000000       0x61 ./Src/led.o
  .debug_macro   0x00000000       0x2a ./Src/led.o
  .debug_macro   0x00000000       0x43 ./Src/led.o
@@ -366,6 +373,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x10 ./Src/led.o
  .debug_macro   0x00000000       0x35 ./Src/led.o
  .debug_macro   0x00000000       0x20 ./Src/led.o
+ .group         0x00000000        0xc ./Src/main.o
  .group         0x00000000        0xc ./Src/main.o
  .group         0x00000000        0xc ./Src/main.o
  .group         0x00000000        0xc ./Src/main.o
@@ -443,8 +451,10 @@ Discarded input sections
  .debug_macro   0x00000000      0x11f ./Src/main.o
  .debug_macro   0x00000000    0x12a3a ./Src/main.o
  .debug_macro   0x00000000       0x1c ./Src/main.o
+ .debug_macro   0x00000000       0x10 ./Src/main.o
  .debug_macro   0x00000000       0x20 ./Src/main.o
  .debug_macro   0x00000000       0x28 ./Src/main.o
+ .group         0x00000000        0xc ./Src/serial.o
  .group         0x00000000        0xc ./Src/serial.o
  .group         0x00000000        0xc ./Src/serial.o
  .group         0x00000000        0xc ./Src/serial.o
@@ -496,6 +506,7 @@ Discarded input sections
  .debug_macro   0x00000000      0x11f ./Src/serial.o
  .debug_macro   0x00000000    0x12a3a ./Src/serial.o
  .debug_macro   0x00000000       0x1c ./Src/serial.o
+ .debug_macro   0x00000000       0x10 ./Src/serial.o
  .debug_macro   0x00000000       0x61 ./Src/serial.o
  .debug_macro   0x00000000       0x2a ./Src/serial.o
  .debug_macro   0x00000000       0x43 ./Src/serial.o
@@ -1683,87 +1694,88 @@ LOAD C:/ST/STM32CubeIDE_1.14.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_rnglists
                 0x000001ed       0x19 ./Startup/startup_stm32f303vctx.o
 
-.debug_macro    0x00000000    0x1746f
- .debug_macro   0x00000000      0x1c2 ./Src/config_timer.o
- .debug_macro   0x000001c2      0xac0 ./Src/config_timer.o
- .debug_macro   0x00000c82       0x22 ./Src/config_timer.o
- .debug_macro   0x00000ca4       0x8e ./Src/config_timer.o
- .debug_macro   0x00000d32       0x51 ./Src/config_timer.o
- .debug_macro   0x00000d83      0x103 ./Src/config_timer.o
- .debug_macro   0x00000e86       0x6a ./Src/config_timer.o
- .debug_macro   0x00000ef0      0x1df ./Src/config_timer.o
- .debug_macro   0x000010cf       0x28 ./Src/config_timer.o
- .debug_macro   0x000010f7       0x1c ./Src/config_timer.o
- .debug_macro   0x00001113       0x22 ./Src/config_timer.o
- .debug_macro   0x00001135       0xd9 ./Src/config_timer.o
- .debug_macro   0x0000120e     0x102d ./Src/config_timer.o
- .debug_macro   0x0000223b      0x11f ./Src/config_timer.o
- .debug_macro   0x0000235a    0x12a3a ./Src/config_timer.o
- .debug_macro   0x00014d94       0x22 ./Src/config_timer.o
- .debug_macro   0x00014db6       0x1c ./Src/config_timer.o
- .debug_macro   0x00014dd2       0x61 ./Src/config_timer.o
- .debug_macro   0x00014e33       0x2a ./Src/config_timer.o
- .debug_macro   0x00014e5d       0x43 ./Src/config_timer.o
- .debug_macro   0x00014ea0       0x34 ./Src/config_timer.o
- .debug_macro   0x00014ed4      0x189 ./Src/config_timer.o
- .debug_macro   0x0001505d       0x16 ./Src/config_timer.o
- .debug_macro   0x00015073       0x43 ./Src/config_timer.o
- .debug_macro   0x000150b6       0x34 ./Src/config_timer.o
- .debug_macro   0x000150ea       0x10 ./Src/config_timer.o
- .debug_macro   0x000150fa       0x58 ./Src/config_timer.o
- .debug_macro   0x00015152       0x8e ./Src/config_timer.o
- .debug_macro   0x000151e0       0x1c ./Src/config_timer.o
- .debug_macro   0x000151fc      0x177 ./Src/config_timer.o
- .debug_macro   0x00015373      0x369 ./Src/config_timer.o
- .debug_macro   0x000156dc       0x10 ./Src/config_timer.o
- .debug_macro   0x000156ec       0x35 ./Src/config_timer.o
- .debug_macro   0x00015721       0x20 ./Src/config_timer.o
- .debug_macro   0x00015741      0x1cd ./Src/flags.o
- .debug_macro   0x0001590e       0x22 ./Src/flags.o
- .debug_macro   0x00015930       0x28 ./Src/flags.o
- .debug_macro   0x00015958      0x1cc ./Src/interrupts.o
- .debug_macro   0x00015b24      0x1fa ./Src/led.o
- .debug_macro   0x00015d1e       0x1c ./Src/led.o
- .debug_macro   0x00015d3a       0x16 ./Src/led.o
- .debug_macro   0x00015d50       0x16 ./Src/led.o
- .debug_macro   0x00015d66       0x29 ./Src/led.o
- .debug_macro   0x00015d8f      0x232 ./Src/main.o
- .debug_macro   0x00015fc1       0x16 ./Src/main.o
- .debug_macro   0x00015fd7       0x9e ./Src/main.o
- .debug_macro   0x00016075      0x10b ./Src/main.o
- .debug_macro   0x00016180       0x10 ./Src/main.o
- .debug_macro   0x00016190       0x16 ./Src/main.o
- .debug_macro   0x000161a6       0x16 ./Src/main.o
- .debug_macro   0x000161bc      0x146 ./Src/main.o
- .debug_macro   0x00016302       0x16 ./Src/main.o
- .debug_macro   0x00016318      0x1bb ./Src/serial.o
- .debug_macro   0x000164d3      0x274 ./Src/syscalls.o
- .debug_macro   0x00016747       0x5b ./Src/syscalls.o
- .debug_macro   0x000167a2       0x94 ./Src/syscalls.o
- .debug_macro   0x00016836       0x57 ./Src/syscalls.o
- .debug_macro   0x0001688d       0x10 ./Src/syscalls.o
- .debug_macro   0x0001689d       0x10 ./Src/syscalls.o
- .debug_macro   0x000168ad       0x10 ./Src/syscalls.o
- .debug_macro   0x000168bd       0x10 ./Src/syscalls.o
- .debug_macro   0x000168cd       0x1c ./Src/syscalls.o
- .debug_macro   0x000168e9       0x52 ./Src/syscalls.o
- .debug_macro   0x0001693b       0x22 ./Src/syscalls.o
- .debug_macro   0x0001695d       0x10 ./Src/syscalls.o
- .debug_macro   0x0001696d       0x52 ./Src/syscalls.o
- .debug_macro   0x000169bf       0xcf ./Src/syscalls.o
- .debug_macro   0x00016a8e       0x1c ./Src/syscalls.o
- .debug_macro   0x00016aaa       0x3d ./Src/syscalls.o
- .debug_macro   0x00016ae7       0x35 ./Src/syscalls.o
- .debug_macro   0x00016b1c      0x12c ./Src/syscalls.o
- .debug_macro   0x00016c48       0x10 ./Src/syscalls.o
- .debug_macro   0x00016c58      0x242 ./Src/syscalls.o
- .debug_macro   0x00016e9a       0x1c ./Src/syscalls.o
- .debug_macro   0x00016eb6       0x10 ./Src/syscalls.o
- .debug_macro   0x00016ec6      0x18a ./Src/syscalls.o
- .debug_macro   0x00017050       0x16 ./Src/syscalls.o
- .debug_macro   0x00017066       0xce ./Src/syscalls.o
- .debug_macro   0x00017134       0xff ./Src/sysmem.o
- .debug_macro   0x00017233      0x23c ./Src/sysmem.o
+.debug_macro    0x00000000    0x17485
+ .debug_macro   0x00000000      0x1c7 ./Src/config_timer.o
+ .debug_macro   0x000001c7      0xac0 ./Src/config_timer.o
+ .debug_macro   0x00000c87       0x22 ./Src/config_timer.o
+ .debug_macro   0x00000ca9       0x8e ./Src/config_timer.o
+ .debug_macro   0x00000d37       0x51 ./Src/config_timer.o
+ .debug_macro   0x00000d88      0x103 ./Src/config_timer.o
+ .debug_macro   0x00000e8b       0x6a ./Src/config_timer.o
+ .debug_macro   0x00000ef5      0x1df ./Src/config_timer.o
+ .debug_macro   0x000010d4       0x28 ./Src/config_timer.o
+ .debug_macro   0x000010fc       0x1c ./Src/config_timer.o
+ .debug_macro   0x00001118       0x22 ./Src/config_timer.o
+ .debug_macro   0x0000113a       0xd9 ./Src/config_timer.o
+ .debug_macro   0x00001213     0x102d ./Src/config_timer.o
+ .debug_macro   0x00002240      0x11f ./Src/config_timer.o
+ .debug_macro   0x0000235f    0x12a3a ./Src/config_timer.o
+ .debug_macro   0x00014d99       0x22 ./Src/config_timer.o
+ .debug_macro   0x00014dbb       0x1c ./Src/config_timer.o
+ .debug_macro   0x00014dd7       0x61 ./Src/config_timer.o
+ .debug_macro   0x00014e38       0x2a ./Src/config_timer.o
+ .debug_macro   0x00014e62       0x43 ./Src/config_timer.o
+ .debug_macro   0x00014ea5       0x34 ./Src/config_timer.o
+ .debug_macro   0x00014ed9      0x189 ./Src/config_timer.o
+ .debug_macro   0x00015062       0x16 ./Src/config_timer.o
+ .debug_macro   0x00015078       0x43 ./Src/config_timer.o
+ .debug_macro   0x000150bb       0x34 ./Src/config_timer.o
+ .debug_macro   0x000150ef       0x10 ./Src/config_timer.o
+ .debug_macro   0x000150ff       0x58 ./Src/config_timer.o
+ .debug_macro   0x00015157       0x8e ./Src/config_timer.o
+ .debug_macro   0x000151e5       0x1c ./Src/config_timer.o
+ .debug_macro   0x00015201      0x177 ./Src/config_timer.o
+ .debug_macro   0x00015378      0x369 ./Src/config_timer.o
+ .debug_macro   0x000156e1       0x10 ./Src/config_timer.o
+ .debug_macro   0x000156f1       0x35 ./Src/config_timer.o
+ .debug_macro   0x00015726       0x20 ./Src/config_timer.o
+ .debug_macro   0x00015746       0x10 ./Src/config_timer.o
+ .debug_macro   0x00015756      0x1d2 ./Src/flags.o
+ .debug_macro   0x00015928       0x16 ./Src/flags.o
+ .debug_macro   0x0001593e       0x28 ./Src/flags.o
+ .debug_macro   0x00015966      0x1d1 ./Src/interrupts.o
+ .debug_macro   0x00015b37      0x1ff ./Src/led.o
+ .debug_macro   0x00015d36       0x10 ./Src/led.o
+ .debug_macro   0x00015d46       0x16 ./Src/led.o
+ .debug_macro   0x00015d5c       0x16 ./Src/led.o
+ .debug_macro   0x00015d72       0x29 ./Src/led.o
+ .debug_macro   0x00015d9b      0x237 ./Src/main.o
+ .debug_macro   0x00015fd2       0x16 ./Src/main.o
+ .debug_macro   0x00015fe8       0x9e ./Src/main.o
+ .debug_macro   0x00016086      0x10b ./Src/main.o
+ .debug_macro   0x00016191       0x10 ./Src/main.o
+ .debug_macro   0x000161a1       0x16 ./Src/main.o
+ .debug_macro   0x000161b7       0x16 ./Src/main.o
+ .debug_macro   0x000161cd      0x146 ./Src/main.o
+ .debug_macro   0x00016313       0x16 ./Src/main.o
+ .debug_macro   0x00016329      0x1c0 ./Src/serial.o
+ .debug_macro   0x000164e9      0x274 ./Src/syscalls.o
+ .debug_macro   0x0001675d       0x5b ./Src/syscalls.o
+ .debug_macro   0x000167b8       0x94 ./Src/syscalls.o
+ .debug_macro   0x0001684c       0x57 ./Src/syscalls.o
+ .debug_macro   0x000168a3       0x10 ./Src/syscalls.o
+ .debug_macro   0x000168b3       0x10 ./Src/syscalls.o
+ .debug_macro   0x000168c3       0x10 ./Src/syscalls.o
+ .debug_macro   0x000168d3       0x10 ./Src/syscalls.o
+ .debug_macro   0x000168e3       0x1c ./Src/syscalls.o
+ .debug_macro   0x000168ff       0x52 ./Src/syscalls.o
+ .debug_macro   0x00016951       0x22 ./Src/syscalls.o
+ .debug_macro   0x00016973       0x10 ./Src/syscalls.o
+ .debug_macro   0x00016983       0x52 ./Src/syscalls.o
+ .debug_macro   0x000169d5       0xcf ./Src/syscalls.o
+ .debug_macro   0x00016aa4       0x1c ./Src/syscalls.o
+ .debug_macro   0x00016ac0       0x3d ./Src/syscalls.o
+ .debug_macro   0x00016afd       0x35 ./Src/syscalls.o
+ .debug_macro   0x00016b32      0x12c ./Src/syscalls.o
+ .debug_macro   0x00016c5e       0x10 ./Src/syscalls.o
+ .debug_macro   0x00016c6e      0x242 ./Src/syscalls.o
+ .debug_macro   0x00016eb0       0x1c ./Src/syscalls.o
+ .debug_macro   0x00016ecc       0x10 ./Src/syscalls.o
+ .debug_macro   0x00016edc      0x18a ./Src/syscalls.o
+ .debug_macro   0x00017066       0x16 ./Src/syscalls.o
+ .debug_macro   0x0001707c       0xce ./Src/syscalls.o
+ .debug_macro   0x0001714a       0xff ./Src/sysmem.o
+ .debug_macro   0x00017249      0x23c ./Src/sysmem.o
 
 .debug_line     0x00000000     0x3dbf
  .debug_line    0x00000000      0x9f0 ./Src/config_timer.o
@@ -1776,24 +1788,24 @@ LOAD C:/ST/STM32CubeIDE_1.14.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_line    0x000037c6      0x57e ./Src/sysmem.o
  .debug_line    0x00003d44       0x7b ./Startup/startup_stm32f303vctx.o
 
-.debug_str      0x00000000    0x7892d
- .debug_str     0x00000000    0x75db1 ./Src/config_timer.o
-                              0x76131 (size before relaxing)
- .debug_str     0x00075db1      0x15a ./Src/flags.o
-                              0x75a1a (size before relaxing)
- .debug_str     0x00075f0b       0x61 ./Src/interrupts.o
-                              0x758e9 (size before relaxing)
- .debug_str     0x00075f6c      0x139 ./Src/led.o
-                              0x75948 (size before relaxing)
- .debug_str     0x000760a5      0x69f ./Src/main.o
-                              0x75fc5 (size before relaxing)
- .debug_str     0x00076744      0x177 ./Src/serial.o
-                              0x75fa8 (size before relaxing)
- .debug_str     0x000768bb     0x1fcd ./Src/syscalls.o
+.debug_str      0x00000000    0x7891b
+ .debug_str     0x00000000    0x75db7 ./Src/config_timer.o
+                              0x7613c (size before relaxing)
+ .debug_str     0x00075db7      0x142 ./Src/flags.o
+                              0x75a0d (size before relaxing)
+ .debug_str     0x00075ef9       0x61 ./Src/interrupts.o
+                              0x758f4 (size before relaxing)
+ .debug_str     0x00075f5a      0x139 ./Src/led.o
+                              0x7593b (size before relaxing)
+ .debug_str     0x00076093      0x69f ./Src/main.o
+                              0x75fd0 (size before relaxing)
+ .debug_str     0x00076732      0x177 ./Src/serial.o
+                              0x75fb3 (size before relaxing)
+ .debug_str     0x000768a9     0x1fcd ./Src/syscalls.o
                                0x98cc (size before relaxing)
- .debug_str     0x00078888       0x66 ./Src/sysmem.o
+ .debug_str     0x00078876       0x66 ./Src/sysmem.o
                                0x60e4 (size before relaxing)
- .debug_str     0x000788ee       0x3f ./Startup/startup_stm32f303vctx.o
+ .debug_str     0x000788dc       0x3f ./Startup/startup_stm32f303vctx.o
                                  0x81 (size before relaxing)
 
 .comment        0x00000000       0x43
