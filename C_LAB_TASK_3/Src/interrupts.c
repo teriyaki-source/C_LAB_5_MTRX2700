@@ -6,7 +6,7 @@
 // Define callback functions for various interrupts
 extern void (*tim3_overflow_callback)();
 extern void (*tim2_ccr1_callback)();
-//extern void (*button_press_callback)(uint16_t delay_ms, void (*one_shot_callback));
+
 
 
 // Handle interrupts for timer 2 (one-shot callback)

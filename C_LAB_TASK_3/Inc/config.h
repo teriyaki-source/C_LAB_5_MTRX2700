@@ -6,7 +6,7 @@
 //Constants
 #define PRESCALER 7999  // value to put into prescaler register such that 1 count is 1 ms
 #define INTERVAL_MS 200 // interval (ms) between function callbacK
-#define ONE_SHOT_DURATION 2800
+#define ONE_SHOT_DURATION 3200
 #define ONE_SHOT_DELAY_MS 1000  // delay between pressing button and callback being called
 #define TIM2_MAX_COUNT 0xFFFFFFFF  // default auto-reload value for timer 2
 

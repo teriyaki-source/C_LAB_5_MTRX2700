@@ -29,7 +29,7 @@
 // Define callback functions for various interrupts
 void (*tim3_overflow_callback)() = 0x00;
 void (*tim2_ccr1_callback)() = 0x00;
-void (*button_press_callback)(uint16_t delay_ms, void (*one_shot_callback)) = 0x00;
+
 
 
 

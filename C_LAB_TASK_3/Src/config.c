@@ -178,7 +178,8 @@ void trigger_led_inversion() {
 
 void toggle_leds_and_start_timer() {
     toggle_led();  // Assume this toggles to the inverted state
-    setup_one_shot_timer(2800  , &resume_led_chase);  // Continue in inverted state for 2800ms
+    setup_one_shot_timer(3200  , &resume_led_chase);  // Continue in inverted state for 3200ms
+	//for 2 cycles of the leds 
 }
 
 void resume_led_chase() {
