@@ -48,20 +48,23 @@ void enable_interrupt_button()
 
 void get_current_led(uint8_t *bitmask)
 {
+	//get current bitmask from the LED register
 	*bitmask = *(((uint8_t*)&(GPIOE->ODR)) + 1);
 }
 
 void store_led(uint8_t bitmask)
 {
+	//get the address of the led register
 	uint8_t *led_register = ((uint8_t*)&(GPIOE->ODR)) + 1;
 
+	//store the bitmask back to the register
 	*led_register = bitmask;
 }
 
 void led_flag_on()
 {
+	//set flag to PRESSED
 	led_flag = PRESSED;
-
 }
 
 void led_flag_off()
@@ -80,6 +83,7 @@ void modify_led()
 	get_current_led(&bitmask);
 
 
+	//shift the LED by 1 place
 	bitmask <<= 1;
 	if (bitmask == 0)
 	{
@@ -91,8 +95,10 @@ void modify_led()
 
 }
 
+
 void led_start_up()
 {
+	//call to functions for setting up the led
 	enable_clocks();
 
 	initialise_board();
@@ -102,10 +108,15 @@ void led_start_up()
 
 void flag_check()
 {
+	//checking the status of the flag
 	if(led_flag == PRESSED)
 	{
+		//if flag raised:
+		//call function to modify LEDs
 		modify_led();
+		//call function to limit the speed the LED can be changed
 		timer_loop();
+		//clear the flag.
 		led_flag_off();
 	}
 }
