@@ -12,11 +12,9 @@
 void get_current_led(uint8_t *bitmask);
 //store the led bitmask back to led register
 void store_led(uint8_t bitmask);
-void led_flag_on();
-void led_flag_off();
-//function to modify the led
+//fucntion to convert the input string message to uint8_t
 uint8_t str_to_bin(uint8_t* original);
-
+//function to modify the led
 void modify_led(uint8_t *new_mask);
 
 #endif /* LED_H_ */

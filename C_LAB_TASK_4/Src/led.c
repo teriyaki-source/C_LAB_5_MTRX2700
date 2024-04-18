@@ -4,17 +4,22 @@
 
 void get_current_led(uint8_t *bitmask)
 {
+	//get current bitmask from LED register.
 	*bitmask = *(((uint8_t*)&(GPIOE->ODR)) + 1);
 }
 
 void store_led(uint8_t bitmask)
 {
+	//get the address of LED bitmask register
 	uint8_t *led_register = ((uint8_t*)&(GPIOE->ODR)) + 1;
 
+	//store the bitmask to the register
 	*led_register = bitmask;
 }
 
 uint8_t str_to_bin(uint8_t* original){
+
+
 	char* ptr;
 
 	uint8_t target = strtol(original, &ptr, OB_OFFSET);
