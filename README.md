@@ -120,7 +120,12 @@ The functions in config.c are called during the initial setup phase of the appli
   - "config.h"
     - BUFFER_SIZE determines the number of characters can be sent in one message
     - TERMINATION_CHAR determines the ASCII value of the character to signify end of message
-* Timer configuration constants:
+* Timer module:
+  * Similarily to task 3, we are consistent in testing the timer by visualising the timer changes using the leds, where the periodic timer is shown by a cyclic pattern of leds that switch every specified interval, the oneshot timer is also similar in that it will
+  * invert the led sequence. In this integration module however, we are also incorporating printing a message into the puTTy console. This means that we can also record and replay the console screen for more accurate and clear timing testing. A change that we made in
+  * the integration task in terms of oneshot functionality was that we removed the one shot delay before the event as this would only cause confusion in the testing of the specified oneshot timing and duration.
+  * We also included a trigger_prescalar so that the timer would overflow once before adjusting to the new interval, since without the timer overflowing once before the new interval is given, the timer is not accurate.
+  * Similarily to task 3, the flags are set when the timer3 has overflowed or for the one shot when the compare value is reached in timer2. 
 
 * Flags module：
   * Flags setting and handling functions.
