@@ -11,13 +11,13 @@ Task 4: All together
 ### Task 1:
 Author: Yunkan Luo
 #### Exercises:
-a,b,c): Using the user input button on the board and treat it as an interrupt to change the pattern of LEDs.
-d):     Restrict the speed the pattern can be changed
+* a,b,c): Using the user input button on the board and treat it as an interrupt to change the pattern of LEDs.
+* d):     Restrict the speed the pattern can be changed
 #### Instruction:
 * Press the user input button and the LEDs would be changed.
 * The time between two changes is set to be 1 second by default setting.
 * The first time pressing the button would light up one LED, and any presses after that will shift the LED to the nearby location.
-* During the setted time length, even if the button is pressed there should not be any change in the LEDs.
+* During the set time length, even if the button is pressed there should not be any change in the LEDs.
   (i.e. All button press would be ignored during the fixed delay time)
 * DO NOT make changes to any values inside the functions and definitions other than 'DELAY' inside "timer.h" file
 #### Testing Procedure:
@@ -121,10 +121,22 @@ Contains functions to toggle LEDs, set timer parameters like prescalers and auto
   - "config.h"
     - BUFFER_SIZE determines the number of characters can be sent in one message
     - TERMINATION_CHAR determines the ASCII value of the character to signify end of message
-    Timer configuration constants:
+* Timer configuration constants:
 
+* Flags module：
+  * Flags setting and handling functions.
+  * Defined struct type Flags and Timer_flags:
+    * Flags: flags for commands received from serial port, and pointers to corresponding action string.
+    * Timer_flags: oneshot flag and continuous timer flags.
+  * Defined Constants in "flags.h":
+    * ON: representing that the flag is raised, value: 1.
+    * OFF: representing the flag is not raised, value: 0.
 
 ## Note
-    *The hardware used is STM32F3DISCOVERY.
-    *This project uses the definition file provided by Dr. Stewart Worrall. 
+* The hardware used is STM32F3DISCOVERY.
+* This project uses the definition file provided by Dr. Stewart Worrall. 
      Link: (https://github.com/stewart-worrall/MTRX2700-2024/tree/374a795e74c5f97bf11a56df9f673c4c0feec6d1/stm32f303-definitions)
+* Standard C library used:
+  * <stdint.h>
+  * <stdlib.h>
+
