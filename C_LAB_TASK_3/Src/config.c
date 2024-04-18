@@ -37,15 +37,15 @@ void config_tim2_interrupts()
 	// Make timer 2 trigger an interrupt when there is
 	// a successful output compare (on channel 1)
 	TIM2->DIER |= TIM_DIER_CC1IE;
-	// We use the capture/compare1 
+	// We use the capture/compare1
 	// interrupt enable TIM_DIER_CC1IE
-	// Setting this bit in the DMA and interrupt 
+	// Setting this bit in the DMA and interrupt
 	// enable register (DIER) of TIM2
 	// This configures the timer to generate an interrupt when the timers counter (CNT)
 	// When CNT matchest the same value as CCR1
 
 	// Tell the NVIC module tim2's priority
-	NVIC_SetPriority(TIM2_IRQn, 2);  
+	NVIC_SetPriority(TIM2_IRQn, 2);
 	NVIC_EnableIRQ(TIM2_IRQn);
 
 	// Re-enable all interrupts
@@ -59,16 +59,16 @@ void config_tim3_interrupts()
 	__disable_irq();
 	// Activate the update interrupt (UIE) for Tim3
 	// Make the timer 3 trigger an interrupt when there is an overflow
-	// Periodic since it occurs every time the timer completes 
+	// Periodic since it occurs every time the timer completes
 	// counting up to the reload value and resets
 	TIM3->DIER |= TIM_DIER_UIE;
-	
+
 
 	// Tell the NVIC module tim3's priority
-	NVIC_SetPriority(TIM3_IRQn, 3);  
+	NVIC_SetPriority(TIM3_IRQn, 3);
 	NVIC_EnableIRQ(TIM3_IRQn);
 
-	// Re-enable all interrupts 
+	// Re-enable all interrupts
 	__enable_irq();
 }
 
@@ -80,7 +80,7 @@ void config_button_interrupts()
 	// Enable the system configuration controller (SYSCFG in RCC)
 	RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;
 
-	
+
 	SYSCFG->EXTICR[0] = SYSCFG_EXTICR1_EXTI0_PA;
 	// External Interrupts details on large manual page 294
 	// PA0 is on interrupt EXTI0 large manual - page 250
@@ -89,14 +89,14 @@ void config_button_interrupts()
 	// Select EXTI0 interrupt on rising edge
 	EXTI->RTSR |= EXTI_RTSR_TR0;  // rising edge of EXTI line 0 (includes PA0)
 
-	// set the interrupt from EXTI line 0 as 'not masked' 
+	// set the interrupt from EXTI line 0 as 'not masked'
 	EXTI->IMR |= EXTI_IMR_MR0;
 
 	// Tell the NVIC module button presses's priority
-	NVIC_SetPriority(EXTI0_IRQn, 1);  
+	NVIC_SetPriority(EXTI0_IRQn, 1);
 	NVIC_EnableIRQ(EXTI0_IRQn);
 
-	// Re-enable all interrupts 
+	// Re-enable all interrupts
 	__enable_irq();
 }
 
@@ -108,7 +108,7 @@ void toggle_led()
     // that corresponds to the LED pins. This is assuming that LEDs are connected to
     // pins 8-15 of GPIOE, which are represented by the second byte of the ODR.
     uint8_t *led_register = ((uint8_t *)&(GPIOE->ODR)) + 1;
-    
+
     // Toggle all LEDs by performing a bitwise XOR on the register's current value with
     // a byte where all bits are set to 1 (0b11111111). This will invert the state of each LED.
     *led_register ^= 0b11111111;
@@ -187,12 +187,12 @@ void trigger_led_inversion() {
     setup_one_shot_timer(ONE_SHOT_DELAY_MS, &toggle_leds_and_start_timer);
 }
 
-}
+
 
 void toggle_leds_and_start_timer() {
     toggle_led();  // Assume this toggles to the inverted state
     setup_one_shot_timer(3200  , &resume_led_chase);  // Continue in inverted state for 3200ms
-	//for 2 cycles of the leds 
+	//for 2 cycles of the leds
 }
 
 void resume_led_chase() {
@@ -207,7 +207,7 @@ static void configure_timer() {
     // Disable Timer 3 while updating settings to avoid glitches
     TIM3->CR1 &= ~TIM_CR1_CEN;
 
-    /
+
     TIM3->PSC = PRESCALER - 1;  // Prescaler setup
 
     // Set the auto-reload value to the current timer period
@@ -224,5 +224,4 @@ void set_timer_period(uint32_t new_period) {
     timer_period = new_period;  // Update the static variable holding the period
     configure_timer();  // Apply the new configuration
 }
-
 
